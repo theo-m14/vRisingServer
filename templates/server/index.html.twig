@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+{% for server in servers %}
+    {{server.name}}
+    {{server.type ? 'PVP' : 'PVE'}}
+    {{server.description}}
+{% endfor %}
+{% endblock %}
