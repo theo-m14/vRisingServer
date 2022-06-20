@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -29,6 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
+
+    #[ORM\OneToMany(mappedBy: 'user_owner', targetEntity: Server::class, orphanRemoval: true)]
+    private $servers;
+
+    public function __construct()
+    {
+        $this->servers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,6 +118,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Server>
+     */
+    public function getServers(): Collection
+    {
+        return $this->servers;
+    }
+
+    public function addServer(Server $server): self
+    {
+        if (!$this->servers->contains($server)) {
+            $this->servers[] = $server;
+            $server->setUserOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServer(Server $server): self
+    {
+        if ($this->servers->removeElement($server)) {
+            // set the owning side to null (unless already changed)
+            if ($server->getUserOwner() === $this) {
+                $server->setUserOwner(null);
+            }
+        }
 
         return $this;
     }
