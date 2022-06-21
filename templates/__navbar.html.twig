@@ -4,9 +4,9 @@
 		<li>
 			<a href="/">Accueil</a>
 		</li>
-		{% if app.user is defined %}
+		{% if app.user %}
 			<li>
-				<a href="">Mon Compte</a>
+				<a href="{{path('app_user_profil')}}">Mon Compte</a>
 			</li>
 			<li>
 				<a href="{{path('app_user_server')}}">Mes Serveurs</a>
@@ -15,5 +15,10 @@
 		<li>
 			<a href="{{path('app_server_create')}}">Créer une fiche serveur</a>
 		</li>
+		{% if app.user %}
+			<li>
+				<a href="{{path('app_logout')}}">Déconnexion</a>
+			</li>
+		{% endif %}
 	</ul>
 </nav>

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte
+{% endblock %}
+
+{% block body %}
+	<h2>Mon Compte</h2>
+	<div>
+		<div>
+			<p>Email :
+			</p>
+			<p>{{app.user.email}}</p>
+		</div>
+		<div>
+			<p>Pseudo :
+			</p>
+			<p>{{app.user.username}}</p>
+		</div>
+		<a href="">Changer mon mot de passe</a>
+		<a href="{{path('app_user_server')}}">Voir vos serveurs</a>
+	</div>
+{% endblock %}

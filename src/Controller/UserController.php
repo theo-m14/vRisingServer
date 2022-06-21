@@ -20,4 +20,14 @@ class UserController extends AbstractController
 
         return $this->render('user/server.html.twig', ['servers' => $userServers]);
     }
+
+    #[Route('/profil', name: 'app_user_profil')]
+    #[IsGranted('ROLE_USER')]
+    public function profil(): Response
+    {
+        return $this->render('user/profil.html.twig');
+    }
+
+    // #[Route('/profile/edit-email', name:'app_user_editEmail')]
+
 }
