@@ -1,0 +1,19 @@
+<nav>
+	<h1>VRisingServerLogo</h1>
+	<ul>
+		<li>
+			<a href="/">Accueil</a>
+		</li>
+		{% if app.user is defined %}
+			<li>
+				<a href="">Mon Compte</a>
+			</li>
+			<li>
+				<a href="{{path('app_user_server')}}">Mes Serveurs</a>
+			</li>
+		{% endif %}
+		<li>
+			<a href="{{path('app_server_create')}}">Créer une fiche serveur</a>
+		</li>
+	</ul>
+</nav>

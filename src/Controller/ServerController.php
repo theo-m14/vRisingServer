@@ -23,9 +23,13 @@ class ServerController extends AbstractController
     }
 
     #[Route('/creation-serveur', name: 'app_server_create')]
-    #[IsGranted('ROLE_USER')]
     public function create(Request $request, ServerRepository $serverManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
         $newServer = new Server();
 
         $form = $this->createForm(ServerType::class, $newServer);
@@ -49,5 +53,46 @@ class ServerController extends AbstractController
         return $this->render('server/readOne.html.twig', [
             'server' => $server,
         ]);
+    }
+
+    #[Route('/serveur-edition/{id}', name: 'app_server_edit')]
+    #[IsGranted('ROLE_USER')]
+    public function edit(Server $server, ServerRepository $serverManager, Request $request)
+    {
+        if ($server->getUserOwner() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $form = $this->createForm(ServerType::class, $server);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+            $serverManager->add($server, true);
+            return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+        }
+
+        return $this->render('server/form.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/serveur-suppression/{id}', name: 'app_server_delete')]
+    #[IsGranted('ROLE_USER')]
+    public function delete(Server $server, ServerRepository $serverManager, Request $request)
+    {
+        if ($server->getUserOwner() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier trest');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-server', $submittedToken)) {
+            $serverManager->remove($server, true);
+            return $this->redirectToRoute('app_user_server');
+        }
+
+        $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier caca');
+        return $this->redirectToRoute('app_server_readAll');
     }
 }

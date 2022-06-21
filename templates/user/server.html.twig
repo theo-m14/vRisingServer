@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes serveurs
+{% endblock %}
+
+{% block body %}
+	<h2>Mes Serveurs</h2>
+	<p>Nombre de Serveur :
+		{{servers|length}}
+		/ 2
+	</p>
+	{% for server in servers %}
+		<div>
+			{{server.name}}
+			{{server.type ? 'PVP' : 'PVE'}}
+			<p>{{server.description}}</p>
+			{% if server.userOwner == app.user %}
+				<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
+			{% endif %}
+			<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+		</div>
+		<form action="{{path('app_server_delete', {'id' : server.id})}}" method='post' onsubmit='return (confirm("Voulez vous vraiment supprimer le serveur {{server.name}} ?"))'>
+			<input type="hidden" name="token" value="{{ csrf_token('delete-server') }}">
+			<button type="submit">Supprimer</button>
+		</form>
+	{% endfor %}
+	<a href="{{path('app_server_create')}}">Créer une fiche serveur</a>
+{% endblock %}
