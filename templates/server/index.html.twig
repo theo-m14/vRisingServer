@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
-{% for server in servers %}
-    {{server.name}}
-    {{server.type ? 'PVP' : 'PVE'}}
-    {{server.description}}
-{% endfor %}
+	{% for server in servers %}
+		<div>
+			{{server.name}}
+			{{server.type ? 'PVP' : 'PVE'}}
+			<p>{{server.description}}</p>
+			<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+		</div>
+	{% endfor %}
 {% endblock %}

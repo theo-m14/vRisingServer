@@ -42,4 +42,12 @@ class ServerController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/serveur/{id}', name: 'app_server_readOne')]
+    public function readOne(Server $server): Response
+    {
+        return $this->render('server/readOne.html.twig', [
+            'server' => $server,
+        ]);
+    }
 }

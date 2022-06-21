@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	{{server.name}}
+	<div>
+		<p>Type de serveur :</p>
+		<p>{{server.type ? 'PVP' : 'PVE'}}</p>
+	</div>
+	<div>
+		<p>Date de lancement :</p>
+		<p>{{server.openDay|date('d/m/Y h:m')}}</p>
+	</div>
+	<div>
+		<p>Serveur à reset :</p>
+		<p>{{server.wipe ? 'Oui' : 'Non'}}</p>
+	</div>
+	{% if server.wipe %}
+		<div>
+			<p>Date de reset :</p>
+			<p>{{server.wipe_date|date('d/m/Y h:m')}}</p>
+		</div>
+	{% endif %}
+	<div>
+		<p>{{server.description}}</p>
+	</div>
+	{% if discord is defined %}
+		<div>
+			<p>SERVEUR DISCORD</p>
+			<p>{{server.discord}}</p>
+		</div>
+	{% endif %}
+{% endblock %}
