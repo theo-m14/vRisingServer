@@ -10,11 +10,13 @@
 			<p>Email :
 			</p>
 			<p>{{app.user.email}}</p>
+			<a href="{{path('app_user_editEmail')}}">Changer d'email</a>
 		</div>
 		<div>
 			<p>Pseudo :
 			</p>
 			<p>{{app.user.username}}</p>
+			<a href="{{path('app_user_editUsername')}}">Changer d'username</a>
 		</div>
 		<a href="">Changer mon mot de passe</a>
 		<a href="{{path('app_user_server')}}">Voir vos serveurs</a>

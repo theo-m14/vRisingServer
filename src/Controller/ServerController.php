@@ -39,7 +39,7 @@ class ServerController extends AbstractController
         if ($form->isSubmitted() and $form->isValid()) {
             $newServer->setUserOwner($this->getUser());
             $serverManager->add($newServer, true);
-            return $this->redirectToRoute('app_server_readAll');
+            return $this->redirectToRoute('app_server_readOne', ['id' => $newServer->getId()]);
         }
 
         return $this->render('server/form.html.twig', [

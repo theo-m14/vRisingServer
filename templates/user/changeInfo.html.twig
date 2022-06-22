@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changement d'information
+{% endblock %}
+
+{% block body %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p class="error">{{ error }}</p>
+	{% endfor %}
+	{{form_start(form)}}
+	<button type="submit">Changer</button>
+	{{form_end(form)}}
+{% endblock %}
