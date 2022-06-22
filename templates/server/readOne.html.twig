@@ -24,13 +24,13 @@
 	{% if server.wipe %}
 		<div>
 			<p>Date de reset :</p>
-			<p>{{server.wipe_date|date('d/m/Y h:m')}}</p>
+			<p>{{server.wipeDate|date('d/m/Y h:m')}}</p>
 		</div>
 	{% endif %}
 	<div>
 		<p>{{server.description}}</p>
 	</div>
-	{% if discord is defined %}
+	{% if server.discord is defined %}
 		<div>
 			<p>SERVEUR DISCORD</p>
 			<p>{{server.discord}}</p>

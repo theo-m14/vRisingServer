@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Server;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,70 @@ class ServerRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Server[] Returns an array of Server objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function searchServer($name, $type, $openDay, $clan_size, $discord, $wipe)
+    {
+        $result = $this->createQueryBuilder('s')
+            ->andWhere('s.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%');
 
-//    public function findOneBySomeField($value): ?Server
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($type !== 'all') {
+            $result->andWhere('s.type = :type')
+                ->setParameter('type', $type == 'pvp');
+        }
+
+        if ($openDay !== 'all') {
+            if ($openDay !== 'past') {
+                $result->andWhere('s.openDay >= :now')
+                    ->setParameter('now', new DateTime());
+            } else {
+                $result->andWhere('s.openDay <= :now')
+                    ->setParameter('now', new DateTime());
+            }
+        }
+
+        if ($clan_size !== 'all') {
+            $result->andWhere('s.clan_size = :clan_size')
+                ->setParameter('clan_size', $clan_size);
+        }
+
+        if ($discord !== 'all') {
+            if ($discord == 'with') {
+                $result->andWhere('s.discord IS NOT NULL');
+            } else {
+                $result->andWhere('s.discord IS NULL');
+            }
+        }
+
+        if ($wipe !== 'all') {
+            $result->andWhere('s.wipe = :wipe')
+                ->setParameter('wipe', $wipe == 'with');
+        }
+
+        return $result->getQuery()->getResult();
+    }
+
+    //    /**
+    //     * @return Server[] Returns an array of Server objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Server
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

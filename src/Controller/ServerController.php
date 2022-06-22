@@ -95,4 +95,51 @@ class ServerController extends AbstractController
         $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier caca');
         return $this->redirectToRoute('app_server_readAll');
     }
+
+    #[Route('/server-search', name: 'app_server_search')]
+    public function search(ServerRepository $serverRepository, Request $request)
+    {
+        $name = $request->request->get('name');
+
+        $type = $request->request->get('type');
+        //verif des champs
+        if ($type !== "pve" and $type !== 'pvp' and $type !== "all") {
+            $this->addFlash("searchError", 'Veuillez selectionner un type valide');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $openDate = $request->request->get('openDate');
+
+        if ($openDate !== "past" and $openDate !== 'incomming' and $openDate !== 'all') {
+            $this->addFlash("searchError", 'Veuillez selectionner une date de lancement valide');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $clan_size = $request->request->get('clan_size');
+
+        if ($clan_size !== 'all' and $clan_size !== '1' and $clan_size !== '2' and $clan_size !== '3' and $clan_size !== '4') {
+            $this->addFlash("searchError", 'Veuillez selectionner une taile de clan valide');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $wipe = $request->request->get('wipe');
+
+        if ($wipe !== 'all' and $wipe !== 'with' and $wipe !== 'without') {
+            $this->addFlash("searchError", 'Veuillez selectionner une option de reset valide');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $discord = $request->request->get('discord');
+
+        if ($discord !== 'all' and $discord !== 'with' and $discord !== 'without') {
+            $this->addFlash("searchError", 'Veuillez selectionner une option discord valide');
+            return $this->redirectToRoute('app_server_readAll');
+        }
+
+        $searchedServer = $serverRepository->searchServer($name, $type, $openDate, $clan_size, $discord, $wipe);
+
+        return $this->render('server/index.html.twig', [
+            'servers' => $searchedServer,
+        ]);
+    }
 }

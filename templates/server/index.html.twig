@@ -9,36 +9,47 @@
 	{% endfor %}
 	<div class='main-content'>
 		<div class='search-container'>
-			<form action="">
+			<form action="{{path('app_server_search')}}" method='post'>
 				<div>
-					<label for="">Nom</label>
-					<input type="text" name="" id="">
+					<label for="name">Nom</label>
+					<input type="text" name="name" id="name">
 				</div>
 				<div>
-					<label for="">Type de Serveur</label>
-					<select name="" id="">
+					<label for="type">Type de Serveur</label>
+					<select name="type" id="type">
+						<option value="all">TOUS</option>
 						<option value="pve">PVE</option>
 						<option value="pvp">PVP</option>
 					</select>
 				</div>
 				<div>
-					<label for="">Date de lancement</label>
-					<select name="" id="">
+					<label for="openDate">Date de lancement</label>
+					<select name="openDate" id="openDate">
+						<option value="all">Toutes</option>
 						<option value="past">Passée</option>
 						<option value="incomming">A venir</option>
 					</select>
 				</div>
 				<div>
-					<label for="">Reset Serveur</label>
-					<input type="checkbox" name="wipe" id="">
+					<label for="wipe">Reset Serveur</label>
+					<select name="wipe" id="openDate">
+						<option value="all"></option>
+						<option value="with">Avec</option>
+						<option value="without">Sans</option>
+					</select>
 				</div>
 				<div>
-					<label for="">Serveur Discord</label>
-					<input type="checkbox" name="discord" id="">
+					<label for="discord">Serveur Discord</label>
+					<select name="discord" id="openDate">
+						<option value="all"></option>
+						<option value="with">Avec</option>
+						<option value="without">Sans</option>
+					</select>
 				</div>
 				<div>
-					<label for="">Taille clan</label>
-					<select name="" id="">
+					<label for="clan_size">Taille clan</label>
+					<select name="clan_size" id="">
+						<option value="all">Toutes</option>
 						<option value="1">Solo</option>
 						<option value="2">Duo</option>
 						<option value="3">Trio</option>
