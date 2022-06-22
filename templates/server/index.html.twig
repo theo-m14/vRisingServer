@@ -7,15 +7,73 @@
 	{% for error in app.session.flashbag.get('error') %}
 		<p class="error">{{ error }}</p>
 	{% endfor %}
-	{% for server in servers %}
-		<div>
-			{{server.name}}
-			{{server.type ? 'PVP' : 'PVE'}}
-			<p>{{server.description}}</p>
-			{% if server.userOwner == app.user %}
-				<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
-			{% endif %}
-			<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+	<div class='main-content'>
+		<div class='search-container'>
+			<form action="">
+				<div>
+					<label for="">Nom</label>
+					<input type="text" name="" id="">
+				</div>
+				<div>
+					<label for="">Type de Serveur</label>
+					<select name="" id="">
+						<option value="pve">PVE</option>
+						<option value="pvp">PVP</option>
+					</select>
+				</div>
+				<div>
+					<label for="">Date de lancement</label>
+					<select name="" id="">
+						<option value="past">Passée</option>
+						<option value="incomming">A venir</option>
+					</select>
+				</div>
+				<div>
+					<label for="">Reset Serveur</label>
+					<input type="checkbox" name="wipe" id="">
+				</div>
+				<div>
+					<label for="">Serveur Discord</label>
+					<input type="checkbox" name="discord" id="">
+				</div>
+				<div>
+					<label for="">Taille clan</label>
+					<select name="" id="">
+						<option value="1">Solo</option>
+						<option value="2">Duo</option>
+						<option value="3">Trio</option>
+						<option value="4">Squad</option>
+					</select>
+				</div>
+				<div>
+					<label for="">Tri par note</label>
+					<select name="note" id="">
+						<option value="asc">Croissant</option>
+						<option value="desc">Décroissant</option>
+					</select>
+				</div>
+				<div>
+					<label for="">Nombre d'avis</label>
+					<select name="review" id="">
+						<option value="asc">Croissant</option>
+						<option value="desc">Décroissant</option>
+					</select>
+				</div>
+				<button type="submit">Chercher</button>
+			</form>
 		</div>
-	{% endfor %}
+		<div class='server-container'>
+			{% for server in servers %}
+				<div>
+					{{server.name}}
+					{{server.type ? 'PVP' : 'PVE'}}
+					<p>{{server.description}}</p>
+					{% if server.userOwner == app.user %}
+						<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
+					{% endif %}
+					<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
