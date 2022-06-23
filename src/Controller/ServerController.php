@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ServerController extends AbstractController
 {
@@ -107,41 +108,36 @@ class ServerController extends AbstractController
     #[Route('/server-search', name: 'app_server_search')]
     public function search(ServerRepository $serverRepository, Request $request, PaginatorInterface $paginator)
     {
-        $name = $request->request->get('name');
+        $name = $request->query->get('name');
 
-        $type = $request->request->get('type');
+        $type = $request->query->get('type');
         //verif des champs
         if ($type !== "pve" and $type !== 'pvp' and $type !== "all") {
-            $this->addFlash("searchError", 'Veuillez selectionner un type valide');
-            return $this->redirectToRoute('app_server_readAll');
+            return new JsonResponse([], $status = 400);
         }
 
-        $openDate = $request->request->get('openDate');
+        $openDate = $request->query->get('openDate');
 
         if ($openDate !== "past" and $openDate !== 'incomming' and $openDate !== 'all') {
-            $this->addFlash("searchError", 'Veuillez selectionner une date de lancement valide');
-            return $this->redirectToRoute('app_server_readAll');
+            return new JsonResponse([], $status = 400);
         }
 
-        $clan_size = $request->request->get('clan_size');
+        $clan_size = $request->query->get('clan_size');
 
         if ($clan_size !== 'all' and $clan_size !== '1' and $clan_size !== '2' and $clan_size !== '3' and $clan_size !== '4') {
-            $this->addFlash("searchError", 'Veuillez selectionner une taile de clan valide');
-            return $this->redirectToRoute('app_server_readAll');
+            return new JsonResponse([], $status = 400);
         }
 
-        $wipe = $request->request->get('wipe');
+        $wipe = $request->query->get('wipe');
 
         if ($wipe !== 'all' and $wipe !== 'with' and $wipe !== 'without') {
-            $this->addFlash("searchError", 'Veuillez selectionner une option de reset valide');
-            return $this->redirectToRoute('app_server_readAll');
+            return new JsonResponse([], $status = 400);
         }
 
-        $discord = $request->request->get('discord');
+        $discord = $request->query->get('discord');
 
         if ($discord !== 'all' and $discord !== 'with' and $discord !== 'without') {
-            $this->addFlash("searchError", 'Veuillez selectionner une option discord valide');
-            return $this->redirectToRoute('app_server_readAll');
+            return new JsonResponse([], $status = 400);
         }
 
         $searchedServer = $serverRepository->searchServer($name, $type, $openDate, $clan_size, $discord, $wipe);
@@ -152,8 +148,10 @@ class ServerController extends AbstractController
             8,
         );
 
-        return $this->render('server/index.html.twig', [
-            'servers' => $serverPaginate,
-        ]);
+        // return $this->render('server/index.html.twig', [
+        //     'servers' => $serverPaginate,
+        // ]);
+
+        return new JsonResponse(['content' => $this->renderView('server/serverData.html.twig', ['servers' => $serverPaginate])]);
     }
 }

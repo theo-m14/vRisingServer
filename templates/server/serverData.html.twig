@@ -1,0 +1,16 @@
+{% for server in servers %}
+	<div>
+		{{server.name}}
+		{{server.type ? 'PVP' : 'PVE'}}
+		<p>{{server.description}}</p>
+		{% if server.userOwner == app.user %}
+			<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
+		{% endif %}
+		<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+	</div>
+{% endfor %}
+<div>
+	<nav>
+		{{ knp_pagination_render(servers) }}
+	</nav>
+</div>
