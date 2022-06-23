@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Server;
 use App\Form\ServerType;
 use App\Repository\ServerRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ServerController extends AbstractController
 {
     #[Route('/', name: 'app_server_readAll')]
-    public function readAll(ServerRepository $serverManager): Response
+    public function readAll(ServerRepository $serverManager, PaginatorInterface $paginator, Request $request): Response
     {
-        $servers = $serverManager->findAll();
+        $serversData = $serverManager->findAll();
+
+        $servers = $paginator->paginate(
+            $serversData,
+            $request->query->getInt('page', 1),
+            8,
+        );
+
         return $this->render('server/index.html.twig', [
             'servers' => $servers,
         ]);
@@ -97,7 +105,7 @@ class ServerController extends AbstractController
     }
 
     #[Route('/server-search', name: 'app_server_search')]
-    public function search(ServerRepository $serverRepository, Request $request)
+    public function search(ServerRepository $serverRepository, Request $request, PaginatorInterface $paginator)
     {
         $name = $request->request->get('name');
 
@@ -138,8 +146,14 @@ class ServerController extends AbstractController
 
         $searchedServer = $serverRepository->searchServer($name, $type, $openDate, $clan_size, $discord, $wipe);
 
+        $serverPaginate =  $paginator->paginate(
+            $searchedServer,
+            $request->query->getInt('page', 1),
+            8,
+        );
+
         return $this->render('server/index.html.twig', [
-            'servers' => $searchedServer,
+            'servers' => $serverPaginate,
         ]);
     }
 }
