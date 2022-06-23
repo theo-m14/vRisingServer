@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Server;
 use App\Form\ServerType;
 use App\Repository\ServerRepository;
+use DateTime;
+use DateTimeImmutable;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +49,7 @@ class ServerController extends AbstractController
 
         if ($form->isSubmitted() and $form->isValid()) {
             $newServer->setUserOwner($this->getUser());
+            $newServer->setCreatedAt(DateTimeImmutable::createFromMutable(new DateTime()));
             $serverManager->add($newServer, true);
             return $this->redirectToRoute('app_server_readOne', ['id' => $newServer->getId()]);
         }

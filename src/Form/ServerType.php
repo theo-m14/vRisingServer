@@ -32,9 +32,6 @@ class ServerType extends AbstractType
                     ]),
                 ],]
             )
-            ->add('createdAt', DateTimeType::class, array(
-                'input' => 'datetime_immutable',
-            ))
             ->add('openDay', DateTimeType::class, array(
                 'input' => 'datetime_immutable',
             ))
