@@ -3,11 +3,22 @@
 {% block title %}Changement d'information
 {% endblock %}
 
+{% block javascripts %}
+	{{ encore_entry_script_tags('checkInfoAvailablity') }}
+{% endblock %}
+
 {% block body %}
 	{% for error in app.session.flashbag.get('error') %}
 		<p class="error">{{ error }}</p>
 	{% endfor %}
 	{{form_start(form)}}
-	<button type="submit">Changer</button>
+	{% if form.username is defined %}
+		{{form_widget(form.username)}}
+	{% endif %}
+	{% if form.email is defined %}
+		{{form_widget(form.email)}}
+	{% endif %}
+	<button type="submit" id='submitBtn' disabled>Changer</button>
 	{{form_end(form)}}
+	<p id='infoAvailablity'></p>
 {% endblock %}

@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AbstractController
 {
@@ -71,7 +69,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
-            if ($userManager->checkIfEmailExist($form->get('username')->getData())) {
+            if ($userManager->checkIfUsernameExist($form->get('username')->getData())) {
                 $userManager->add($user, true);
                 return $this->redirectToRoute('app_user_profil');
             }
@@ -80,5 +78,17 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/changeInfo.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/profile/checkUsernameAvailablity', name: 'app_user_checkUsernameAvailablity')]
+    public function checkUsernameAvailablity(Request $request, UserRepository $userManager): Response
+    {
+        return new JsonResponse(['content' => $userManager->checkIfUsernameExist($request->query->get('checkInfo'))]);
+    }
+
+    #[Route('/profile/checkEmailAvailablity', name: 'app_user_checkEmailAvailablity')]
+    public function checkEmailAvailablity(Request $request, UserRepository $userManager): Response
+    {
+        return new JsonResponse(['content' => $userManager->checkIfEmailExist($request->query->get('checkInfo'))]);
     }
 }
