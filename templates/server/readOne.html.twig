@@ -4,36 +4,102 @@
 {% endblock %}
 
 {% block body %}
-	{{server.name}}
-	<div>
-		<p>Type de serveur :</p>
-		<p>{{server.type ? 'PVP' : 'PVE'}}</p>
-	</div>
-	<div>
-		<p>Date de lancement :</p>
-		<p>{{server.openDay|date('d/m/Y h:m')}}</p>
-	</div>
-	<div>
-		<p>Taille de clan :</p>
-		<p>{{server.clanSize}}</p>
-	</div>
-	<div>
-		<p>Serveur à reset :</p>
-		<p>{{server.wipe ? 'Oui' : 'Non'}}</p>
-	</div>
-	{% if server.wipe %}
+	<div class="server-info">
+		{{server.name}}
 		<div>
-			<p>Date de reset :</p>
-			<p>{{server.wipeDate|date('d/m/Y h:m')}}</p>
+			<p>Type de serveur :</p>
+			<p>{{server.type ? 'PVP' : 'PVE'}}</p>
 		</div>
-	{% endif %}
-	<div>
-		<p>{{server.description}}</p>
-	</div>
-	{% if server.discord is defined %}
 		<div>
-			<p>SERVEUR DISCORD</p>
-			<p>{{server.discord}}</p>
+			<p>Date de lancement :</p>
+			<p>{{server.openDay|date('d/m/Y h:m')}}</p>
 		</div>
-	{% endif %}
+		<div>
+			<p>Taille de clan :</p>
+			<p>{{server.clanSize}}</p>
+		</div>
+		<div>
+			<p>Serveur à reset :</p>
+			<p>{{server.wipe ? 'Oui' : 'Non'}}</p>
+		</div>
+		{% if server.wipe %}
+			<div>
+				<p>Date de reset :</p>
+				<p>{{server.wipeDate|date('d/m/Y h:m')}}</p>
+			</div>
+		{% endif %}
+		<div>
+			<p>{{server.description}}</p>
+		</div>
+		{% if server.discord is defined %}
+			<div>
+				<p>SERVEUR DISCORD</p>
+				<p>{{server.discord}}</p>
+			</div>
+		{% endif %}
+	</div>
+	<div class="reviews-container">
+		{% if app.user %}
+
+			<!-- Check if user already post review -->
+			{% set userAlreadyPostReview = false %}
+			{% set userReviewPosted = {} %}
+			{% for userReview in app.user.reviews %}
+				{% if userReview.server == server %}
+					{% set userAlreadyPostReview  = true %}
+					{% set userReviewPosted = userReview %}
+				{% endif %}
+			{% endfor %}
+			<!-- If not, show form -->
+			{% if not userAlreadyPostReview %}
+				{% for error in app.session.flashbag.get('error') %}
+					<p class="error">{{ error }}</p>
+				{% endfor %}
+				{% for success in app.session.flashbag.get('success') %}
+					<p class="success">{{ success }}</p>
+				{% endfor %}
+				<form action="{{path('app_review_create', {'id' : server.id})}}" method="post">
+					<select name="rating" id="">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+					<textarea name="review-text" id="" cols="30" rows="10" placeholder='Votre commentaire'></textarea>
+					<input type="submit" value="Poster">
+				</form>
+				<!-- Else show user review -->
+			{% else %}
+				<div class="user-review">
+					<p>Votre note :
+						{{ userReviewPosted.star }}</p>
+					<p>{{ userReviewPosted.text }}</p>
+				</div>
+			{% endif %}
+		{% else %}
+			<p>Connectez-vous pour poster un avis</p>
+			<a href="{{path('app_login')}}">Connexion</a>
+		{% endif %}
+		<div class="server-reviews">
+			{% for review in server.reviews %}
+
+				<!-- check is user already post in order not to duplicate review  -->
+				{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
+					<pre>
+					{{ dump(userReviewPosted.id) }}
+					</pre>
+					<p>Note :
+						{{ review.star }}</p>
+					<p>{{review.text}}</p>
+					<!-- if user haven't post yet -->
+				{% elseif not userAlreadyPostReview %}
+					<p>Note :
+						{{ review.star }}</p>
+					<p>{{review.text}}</p>
+				{% endif %}
+
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
