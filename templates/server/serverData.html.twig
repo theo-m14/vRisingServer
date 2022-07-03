@@ -1,12 +1,17 @@
 {% for server in servers %}
-	<div>
-		{{server.name}}
-		{{server.type ? 'PVP' : 'PVE'}}
-		<p>{{server.description}}</p>
-		{% if server.userOwner == app.user %}
-			<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
-		{% endif %}
-		<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+	<div class='server-card'>
+		<div class="card-left">
+			<h4>{{server.name}}</h4>
+			<p>{{server.description}}</p>
+		</div>
+		<div class="card-right">
+			<p class='{{server.type ? 'PVP' : 'PVE'}}'>
+				{{server.type ? 'PVP' : 'PVE'}}</p>
+			{% if server.userOwner == app.user %}
+				<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
+			{% endif %}
+			<a class='btn' href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+		</div>
 	</div>
 {% endfor %}
 <div>

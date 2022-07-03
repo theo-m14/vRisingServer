@@ -11,10 +11,14 @@
 	{% for error in app.session.flashbag.get('error') %}
 		<p class="error">{{ error }}</p>
 	{% endfor %}
+	<div class='header-banner'>
+		<h1>Bienvenue sur VRising Server</h1>
+		<p>Vous êtes à la recherche d'un serveur VRising ? Voici une liste des meilleurs serveurs. Ils sont classés selon le nombre de votes reçus par les joueurs. Trouvez un serveur VRising pour jouer seul ou avec vos amis.</p>
+	</div>
 	<div class='main-content'>
 		<div class='search-container'>
 			<p class='search-error'></p>
-			<form action="{{path('app_server_search')}}" method='get'>
+			<form>
 				<div>
 					<label for="name">Nom</label>
 					<input type="text" name="name" id="name">
@@ -22,9 +26,9 @@
 				<div>
 					<label for="type">Type de Serveur</label>
 					<select name="type" id="type">
-						<option value="all">TOUS</option>
-						<option value="pve">PVE</option>
-						<option value="pvp">PVP</option>
+						<option value="all">Tous</option>
+						<option value="pve">Pve</option>
+						<option value="pvp">Pvp</option>
 					</select>
 				</div>
 				<div>

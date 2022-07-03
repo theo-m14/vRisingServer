@@ -53,7 +53,8 @@
 			<!-- If not, show form -->
 			{% if not userAlreadyPostReview %}
 				{% for error in app.session.flashbag.get('error') %}
-					<p class="error">{{ error }}</p>
+					<p class="error">
+						{{ error }}</p>
 				{% endfor %}
 				{% for success in app.session.flashbag.get('success') %}
 					<p class="success">{{ success }}</p>
@@ -78,6 +79,7 @@
 				</div>
 			{% endif %}
 		{% else %}
+			{% set userAlreadyPostReview = false %}
 			<p>Connectez-vous pour poster un avis</p>
 			<a href="{{path('app_login')}}">Connexion</a>
 		{% endif %}
