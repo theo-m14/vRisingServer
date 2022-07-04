@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p class="error">{{ error }}</p>
+	{% endfor %}
 	<div class="server-info">
 		{{server.name}}
 		<div>
@@ -76,7 +79,10 @@
 					<p>Votre note :
 						{{ userReviewPosted.star }}</p>
 					<p>{{ userReviewPosted.text }}</p>
-					
+					<form method='post' action="{{path('app_review_delete', {'id' : server.id})}}">
+						<input type="hidden" name="token" value="{{ csrf_token('delete-review') }}">
+						<input type="submit" value="Supprimer">
+					</form>
 				</div>
 			{% endif %}
 		{% else %}
@@ -89,9 +95,6 @@
 
 				<!-- check is user already post in order not to duplicate review  -->
 				{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
-					<pre>
-					{{ dump(userReviewPosted.id) }}
-					</pre>
 					<p>Note :
 						{{ review.star }}</p>
 					<p>{{review.text}}</p>

@@ -94,7 +94,7 @@ class ServerController extends AbstractController
     public function delete(Server $server, ServerRepository $serverManager, Request $request)
     {
         if ($server->getUserOwner() !== $this->getUser()) {
-            $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier trest');
+            $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
             return $this->redirectToRoute('app_server_readAll');
         }
 
@@ -105,7 +105,7 @@ class ServerController extends AbstractController
             return $this->redirectToRoute('app_user_server');
         }
 
-        $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier caca');
+        $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
         return $this->redirectToRoute('app_server_readAll');
     }
 

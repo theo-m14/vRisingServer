@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ReviewController extends AbstractController
 {
     #[Route('serveur/{id}/creation-avis', name: 'app_review_create')]
@@ -65,5 +67,53 @@ class ReviewController extends AbstractController
 
         $this->addFlash('success', 'Merci pour votre avis !');
         return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+    }
+
+    #[Route('/serveur/{id}/suppression-avis', name:'app_review_delete')]
+    #[IsGranted('ROLE_USER')]
+    public function delete(Request $request, Server $server, ReviewRepository $reviewManager, ServerRepository $serverManager){
+
+        $submittedToken = $request->request->get('token');
+
+        if($this->isCsrfTokenValid('delete-review', $submittedToken)){
+
+            $server->getReviews();
+
+            foreach($server->getReviews() as $serverReview){
+                if($serverReview->getUser() == $this->getUser() ){
+                    $userReview = $serverReview;
+                }
+            }
+
+            if(!$userReview){
+                $this->addFlash('error',"Vous ne posséder pas d'avis sur ce serveur");
+                $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+            }
+
+            $reviewManager->remove($userReview, true);
+
+            $serverReviews = $server->getReviews();
+
+            if(isEmpty($serverReviews)){
+                $server->setNote(null);
+            }else{
+                $serverNote = 0;
+
+                foreach($serverReviews as $oldReview){
+                        $serverNote+= $oldReview->getStar();
+                }
+                    
+                $serverNote = $serverNote / (count($serverReviews));
+
+                $server->setNote($serverNote);
+            }
+
+                $serverManager->add($server,true);
+                return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+        }
+
+        $this->addFlash('error', "Demande non valide");
+        return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+
     }
 }
