@@ -5,6 +5,7 @@
 			<p>{{server.description}}</p>
 		</div>
 		<div class="card-right">
+			<p class='review-info'>{{server.reviews|length}} AVIS</p>
 			<p class='{{server.type ? 'PVP' : 'PVE'}}'>
 				{{server.type ? 'PVP' : 'PVE'}}</p>
 			{% if server.userOwner == app.user %}

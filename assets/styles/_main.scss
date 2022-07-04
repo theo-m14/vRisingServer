@@ -31,7 +31,7 @@
 .header-banner{
     text-align: center;
     gap: 2em;
-    background-image: url('/public/build/img/v-rising.jpg');
+    background-image: url('/public/image/v-rising.jpg');
     background-position: center;
     padding: 6em;
     background-size: cover;
@@ -117,6 +117,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        .review-info{
+            color:black;
+            font-family: 'Alegreya';
+            font-weight: 500;
+        }
     }
 }
 
