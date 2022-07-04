@@ -1,11 +1,14 @@
 {% for server in servers %}
+    {% if server[0] is defined %}
+		{% set server = server[0] %}
+	{% endif %}
 	<div class='server-card'>
 		<div class="card-left">
 			<h4>{{server.name}}</h4>
 			<p>{{server.description}}</p>
 		</div>
 		<div class="card-right">
-			{% if server.note %} 
+			{% if server.note %}
 				<div class="star-container">
 					{% for i in 1..5 %}
 						{% if i<=server.note|round %}

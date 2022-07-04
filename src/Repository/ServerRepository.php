@@ -40,6 +40,17 @@ class ServerRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAndOrderServer(){
+        return $this->createQueryBuilder('s')
+                ->leftJoin('s.reviews', 'r')
+                ->addSelect('COUNT(r.id) as numberReview')
+                ->groupBy('s.id')
+                ->addOrderBy('numberReview', 'desc')
+                ->addOrderBy('s.note', 'desc')
+                ->getQuery()
+                ->getResult();
+    }
+
     public function searchServer($name, $type, $openDay, $clan_size, $discord, $wipe)
     {
         $result = $this->createQueryBuilder('s')

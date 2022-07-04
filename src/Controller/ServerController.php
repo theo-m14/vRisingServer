@@ -22,7 +22,9 @@ class ServerController extends AbstractController
     {
         // $serversData = $serverManager->findAll();
 
-        $serversData = $serverManager->findBy(array(), ['note' => 'desc']);
+        // $serversData = $serverManager->findBy(array(), ['note' => 'desc']);
+        $serversData = $serverManager->findAndOrderServer();
+
         $servers = $paginator->paginate(
             $serversData,
             $request->query->getInt('page', 1),
