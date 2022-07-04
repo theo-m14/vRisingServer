@@ -8,7 +8,18 @@
 		<p class="error">{{ error }}</p>
 	{% endfor %}
 	<div class="server-info">
-		{{server.name}}
+		<h3>{{server.name}}</h3>
+		{% if server.note %}
+				<div class="star-container">
+					{% for i in 1..5 %}
+						{% if i<=server.note|round %}
+							<div class='full-star'>.</div>
+						{% else %}
+							<div class='empty-star'>.</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+		{% endif %}
 		<div>
 			<p>Type de serveur :</p>
 			<p>{{server.type ? 'PVP' : 'PVE'}}</p>

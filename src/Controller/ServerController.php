@@ -20,9 +20,6 @@ class ServerController extends AbstractController
     #[Route('/', name: 'app_server_readAll')]
     public function readAll(ServerRepository $serverManager, PaginatorInterface $paginator, Request $request): Response
     {
-        // $serversData = $serverManager->findAll();
-
-        // $serversData = $serverManager->findBy(array(), ['note' => 'desc']);
         $serversData = $serverManager->findAndOrderServer();
 
         $servers = $paginator->paginate(
@@ -146,7 +143,19 @@ class ServerController extends AbstractController
             return new JsonResponse([], $status = 400);
         }
 
-        $searchedServer = $serverRepository->searchServer($name, $type, $openDate, $clan_size, $discord, $wipe);
+        $numberOfReview = $request->query->get('review');
+
+        if($numberOfReview !== 'all' and $numberOfReview !== 'asc' and $numberOfReview !== 'desc'){
+            return new JsonResponse([], $status = 400);
+        }
+
+        $note = $request->query->get('note');
+
+        if($note !== 'all' and $note !== 'asc' and $note !== 'desc'){
+            return new JsonResponse([], $status = 400);
+        }
+
+        $searchedServer = $serverRepository->searchServer($name, $type, $openDate, $clan_size, $discord, $wipe, $note, $numberOfReview);
 
         $serverPaginate =  $paginator->paginate(
             $searchedServer,

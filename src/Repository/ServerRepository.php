@@ -51,7 +51,7 @@ class ServerRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
-    public function searchServer($name, $type, $openDay, $clan_size, $discord, $wipe)
+    public function searchServer($name, $type, $openDay, $clan_size, $discord, $wipe, $note, $numberOfReview)
     {
         $result = $this->createQueryBuilder('s')
             ->andWhere('s.name LIKE :name')
@@ -88,6 +88,17 @@ class ServerRepository extends ServiceEntityRepository
         if ($wipe !== 'all') {
             $result->andWhere('s.wipe = :wipe')
                 ->setParameter('wipe', $wipe == 'with');
+        }
+
+        if($note !== 'all'){
+            $result->addOrderBy('s.note', $note);
+        }
+
+        if($numberOfReview !== 'all'){
+            $result->leftJoin('s.reviews', 'r')
+                ->addSelect('COUNT(r.id) as numberOfReview')
+                ->groupBy('s.id')
+                ->addOrderBy('numberOfReview', $numberOfReview);
         }
 
         return $result->getQuery()->getResult();

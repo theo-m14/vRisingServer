@@ -93,8 +93,7 @@ class ReviewController extends AbstractController
             $reviewManager->remove($userReview, true);
 
             $serverReviews = $server->getReviews();
-
-            if(isEmpty($serverReviews)){
+            if($serverReviews->isEmpty()){
                 $server->setNote(null);
             }else{
                 $serverNote = 0;
