@@ -20,8 +20,9 @@ class ServerController extends AbstractController
     #[Route('/', name: 'app_server_readAll')]
     public function readAll(ServerRepository $serverManager, PaginatorInterface $paginator, Request $request): Response
     {
-        $serversData = $serverManager->findAll();
+        // $serversData = $serverManager->findAll();
 
+        $serversData = $serverManager->findBy(array(), ['note' => 'desc']);
         $servers = $paginator->paginate(
             $serversData,
             $request->query->getInt('page', 1),

@@ -5,6 +5,17 @@
 			<p>{{server.description}}</p>
 		</div>
 		<div class="card-right">
+			{% if server.note %} 
+				<div class="star-container">
+					{% for i in 1..5 %}
+						{% if i<=server.note|round %}
+							<div class='full-star' >*</div>
+						{% else %}
+							<div class='empty-star' >-</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			 {% endif %}
 			<p class='review-info'>{{server.reviews|length}} AVIS</p>
 			<p class='{{server.type ? 'PVP' : 'PVE'}}'>
 				{{server.type ? 'PVP' : 'PVE'}}</p>

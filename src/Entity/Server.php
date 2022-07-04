@@ -49,6 +49,9 @@ class Server
     #[ORM\OneToMany(mappedBy: 'server', targetEntity: Review::class, orphanRemoval: true)]
     private $reviews;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $note;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -205,6 +208,18 @@ class Server
                 $review->setServer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNote(): ?float
+    {
+        return $this->note;
+    }
+
+    public function setNote(?float $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

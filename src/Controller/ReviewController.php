@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Review;
 use App\Entity\Server;
 use App\Repository\ReviewRepository;
+use App\Repository\ServerRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ class ReviewController extends AbstractController
 {
     #[Route('serveur/{id}/creation-avis', name: 'app_review_create')]
     #[IsGranted('ROLE_USER')]
-    public function create(Request $request, ReviewRepository $reviewManager, Server $server): Response
+    public function create(Request $request, ReviewRepository $reviewManager, Server $server, ServerRepository $serverManager): Response
     {
         if (!$request->request->get('rating')) {
             $this->addFlash('error', 'Veuillez sélectionner une note pour poster un avis');
@@ -36,6 +37,31 @@ class ReviewController extends AbstractController
         $review->setStar($request->request->get('rating'))->setText($request->request->get('review-text'))->setServer($server)->setUser($this->getUser());
 
         $reviewManager->add($review, true);
+
+        //Update Server Note
+
+        $note = $server->getNote();
+
+        if($note){
+
+            $serverReviews = $server->getReviews();
+            $serverNote = 0;
+
+            foreach($serverReviews as $oldReview){
+                $serverNote+= $oldReview->getStar();
+            }
+            
+
+            $serverNote = $serverNote / (count($serverReviews));
+
+            $server->setNote($serverNote);
+
+            $serverManager->add($server,true);
+        }else{
+            $note = $review->getStar();
+            $server->setNote($note);
+            $serverManager->add($server,true);
+        }
 
         $this->addFlash('success', 'Merci pour votre avis !');
         return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
