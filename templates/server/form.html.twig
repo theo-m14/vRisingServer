@@ -9,29 +9,41 @@
 {% endblock %}
 
 {% block body %}
-	{{form_start(form)}}
+	{{form_start(form, {'attr' : {'id':'server-form'}})}}
 	{{form_widget(form.name, {'attr' : {'placeholder': 'Nom du serveur' }})}}
 	{{ form_errors(form.name) }}
-	{{form_label(form.clan_size, 'Taille de clan')}}
-	{{form_widget(form.clan_size)}}
-	{{ form_errors(form.clan_size) }}
-	{{form_label(form.type, 'Type de serveur')}}
-	{{form_widget(form.type)}}
-	{{ form_errors(form.type) }}
-	{{form_label(form.openDay, 'Date de lancement')}}
-	{{form_widget(form.openDay)}}
-	{{ form_errors(form.openDay) }}
-	{{form_label(form.wipe, 'Serveur à reset')}}
-	{{form_widget(form.wipe)}}
-	{{ form_errors(form.wipe) }}
-	{{form_label(form.wipe_date, 'Date de reset', {'label_attr' : {'id' : 'wipeDate'}})}}
-	{{form_widget(form.wipe_date)}}
-	{{ form_errors(form.wipe_date) }}
+	<div>
+		{{form_label(form.clan_size, 'Taille de clan')}}
+		{{form_widget(form.clan_size)}}
+		{{ form_errors(form.clan_size) }}
+	</div>
+	<div>
+		{{form_label(form.type, 'Type de serveur')}}
+		{{form_widget(form.type)}}
+		{{form_errors(form.type) }}
+	</div>
+	<div>
+		{{form_label(form.openDay, 'Date de lancement')}}
+		{{form_widget(form.openDay)}}
+		{{form_errors(form.openDay) }}
+	</div>
+	<div>
+		{{form_label(form.wipe, 'Serveur à reset')}}
+		{{form_widget(form.wipe)}}
+		{{form_errors(form.wipe) }}
+	</div>
+	<div id='wipeDate'>
+		{{form_label(form.wipe_date, 'Date de reset', {'label_attr' : {'id' : 'wipeDate'}})}}
+		{{form_widget(form.wipe_date)}}
+		{{ form_errors(form.wipe_date) }}
+	</div>
 	{{ form_errors(form.description) }}
 	{{form_widget(form.description, {'attr' : {'placeholder' : 'Description serveur'}})}}
-	{{form_label(form.discord, 'Serveur discord')}}
-	{{ form_errors(form.discord) }}
-	{{form_widget(form.discord)}}
+	<div class="discord-url">
+		{{form_label(form.discord, 'Serveur discord')}}
+		{{form_errors(form.discord) }}
+		{{form_widget(form.discord)}}
+	</div>
 	<button type="submit">Enregistrer</button>
 	{{form_end(form)}}
 {% endblock %}

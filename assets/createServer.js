@@ -1,12 +1,10 @@
 let getCheckboxWipe = document.getElementById("server_wipe");
 
-let getLabelWipeDate = document.getElementById("wipeDate");
-let getInputWipeDate = document.getElementById("server_wipe_date");
+let getWipeDateContainer = document.getElementById('wipeDate')
 
-getLabelWipeDate.classList.add("displayNone");
-getInputWipeDate.classList.add("displayNone");
+getWipeDateContainer.classList.add("displayNone");
+
 
 getCheckboxWipe.addEventListener("click", () => {
-  getLabelWipeDate.classList.toggle("displayNone");
-  getInputWipeDate.classList.toggle("displayNone");
+  getWipeDateContainer.classList.toggle("displayNone");
 });
