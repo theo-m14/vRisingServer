@@ -342,3 +342,45 @@
         margin: auto;
     }
 }
+
+/*Account*/
+
+#account{
+    h2{
+        text-align: center;
+        text-decoration: underline;
+        color: #DC3622;
+        margin: 1em 0 2em 0;
+    }
+    .account-info{
+        width: 60%;
+        margin: auto;
+        div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+            p:first-of-type{
+                color: #AB2B1D;
+            }
+        }
+    }
+    img{
+        width: 20px;
+        filter: invert(17%) sepia(56%) saturate(3906%) hue-rotate(352deg) brightness(98%) contrast(88%);
+        transition: all 0.2ms ease-in-out;
+        &:hover{
+            transform: translateY(-2px);
+        }
+    }
+    .btn{
+        display: block;
+        margin: 2em auto;
+        width: 70%;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: 'Alegreya';
+    }
+}
+
+/*User Server*/

@@ -4,21 +4,31 @@
 {% endblock %}
 
 {% block body %}
-	<h2>Mon Compte</h2>
-	<div>
-		<div>
-			<p>Email :
-			</p>
-			<p>{{app.user.email}}</p>
-			<a href="{{path('app_user_editEmail')}}">Changer d'email</a>
+	<section id='account'>
+		<h2>Mon Compte</h2>
+		<div class='account-info'>
+			<div>
+				<p>Email :
+				</p>
+				<p>{{app.user.email}}</p>
+				<a href="{{path('app_user_editEmail')}}"><img src="/image/square-pen-solid.svg" alt="pen icon"></a>
+			</div>
+			<div>
+				<p>Pseudo :
+				</p>
+				<p>{{app.user.username}}</p>
+				<a href="{{path('app_user_editUsername')}}"><img src="/image/square-pen-solid.svg" alt="pen icon"></a>
+			</div>
+			<a href="" class='btn'>Changer mon mot de passe</a>
+			<div>
+			<p>Votre nombre d'avis : </p>
+			<p>{{app.user.reviews|length}}</p>
+			</div>
+			<div>
+			<p>Moyenne de vos notes :</p>
+			<p>{{averageNote}}/5</p>
+			</div>
+			<a class='btn' href="{{path('app_user_server')}}">Voir vos serveurs</a>
 		</div>
-		<div>
-			<p>Pseudo :
-			</p>
-			<p>{{app.user.username}}</p>
-			<a href="{{path('app_user_editUsername')}}">Changer d'username</a>
-		</div>
-		<a href="">Changer mon mot de passe</a>
-		<a href="{{path('app_user_server')}}">Voir vos serveurs</a>
-	</div>
+	</section>
 {% endblock %}

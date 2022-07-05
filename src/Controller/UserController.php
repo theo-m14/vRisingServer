@@ -26,7 +26,17 @@ class UserController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function profil(): Response
     {
-        return $this->render('user/profil.html.twig');
+        $this->getUser()->getReviews();
+
+        $averageNote = 0;
+
+        foreach($this->getUser()->getReviews() as $review){
+            $averageNote+=$review->getStar();
+        }
+
+        $averageNote = $averageNote / count($this->getUser()->getReviews());
+
+        return $this->render('user/profil.html.twig', ['averageNote' => $averageNote]);
     }
 
 
