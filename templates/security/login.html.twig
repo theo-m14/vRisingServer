@@ -7,7 +7,7 @@
 	<form method="post" id='loginForm'>
 		<h2>Bienvenue sur VRisingServer</h2>
 		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			<div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
 		<input type="text" value="{{ last_username }}" name="username" placeholder='Username' id="inputUsername" class="form-control" autocomplete="username" required autofocus>
 		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder='Mot de passe' required>
