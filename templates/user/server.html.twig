@@ -7,17 +7,18 @@
 	<section class="user-server">
 		<h2>Mes Serveurs</h2>
 		{% for error in app.session.flashbag.get('error') %}
-		<p class="error">{{ error }}</p>
+			<p class="error">{{ error }}</p>
 		{% endfor %}
 		<div>
-		<p>Nombre de Serveur :</p>
-		<p>{{servers|length}} / 2</p>
+			<p>Nombre de Serveur :</p>
+			<p>{{servers|length}}
+				/ 2</p>
 		</div>
 		{% for server in servers %}
 			<div class='server-card'>
 				<div class="card-left">
 					<h4>{{server.name}}</h4>
-					<p>{{server.description}}</p>
+					<p>{{server.description|raw}}</p>
 				</div>
 				<div class="card-right">
 					{% if server.note %}
@@ -31,12 +32,13 @@
 							{% endfor %}
 						</div>
 					{% endif %}
-					<p class='review-info'>{{server.reviews|length}} AVIS</p>
+					<p class='review-info'>{{server.reviews|length}}
+						AVIS</p>
 					<p class='{{server.type ? 'PVP' : 'PVE'}}'>{{server.type ? 'PVP' : 'PVE'}}</p>
 					{% if server.userOwner == app.user %}
 						<a href="{{path('app_server_edit', {'id' : server.id})}}" class='btn'>Editer</a>
 					{% endif %}
-						<a class='btn' href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+					<a class='btn' href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
 				</div>
 			</div>
 			<form action="{{path('app_server_delete', {'id' : server.id})}}" method='post' onsubmit='return (confirm("Voulez vous vraiment supprimer le serveur {{server.name}} ?"))'>

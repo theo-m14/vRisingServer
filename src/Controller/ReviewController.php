@@ -20,7 +20,7 @@ class ReviewController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function create(Request $request, ReviewRepository $reviewManager, Server $server, ServerRepository $serverManager): Response
     {
-        if ($this->getUser()->getServer()->contains($server)) {
+        if ($this->getUser()->getServers()->contains($server)) {
             $this->addFlash('error', 'Vous ne pouvez commentez votre propre serveur');
             return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
         }

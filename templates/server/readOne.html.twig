@@ -16,7 +16,7 @@
 	<div class="server-info">
 		<h3>{{server.name}}</h3>
 		{% if server.note %}
-				{{macroStar.stars(server.note)}}
+			{{macroStar.stars(server.note)}}
 		{% endif %}
 		<div>
 			<p class='label-info'>Type de serveur :</p>
@@ -65,7 +65,7 @@
 				{% endif %}
 			{% endfor %}
 			<!-- If not, show form -->
-			{% if not userAlreadyPostReview %}
+			{% if not userAlreadyPostReview and server not in app.user.servers %}
 				{% for error in app.session.flashbag.get('error') %}
 					<p class="error">
 						{{ error }}</p>
@@ -86,7 +86,7 @@
 					<button type="submit">Poster</button>
 				</form>
 				<!-- Else show user review -->
-			{% else %}
+			{% elseif userAlreadyPostReview %}
 				<div class="user-review">
 					<p>Votre note :
 						{{ macroStar.stars(userReviewPosted.star)  }}</p>
@@ -107,25 +107,25 @@
 		<div class="server-reviews">
 			{% for review in server.reviews %}
 
-					<!-- check is user already post in order not to duplicate review  -->
-					{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
-						<div class="review-container">
-							<div class="review-top">
-								<p>{{review.user.username}}</p>
-								{{macroStar.stars(review.star)}}
-							</div>
-							<p>{{review.text}}</p>
+				<!-- check is user already post in order not to duplicate review  -->
+				{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
+					<div class="review-container">
+						<div class="review-top">
+							<p>{{review.user.username}}</p>
+							{{macroStar.stars(review.star)}}
 						</div>
-						<!-- if user haven't post yet -->
-					{% elseif not userAlreadyPostReview %}
-						<div class="review-container">
-							<div class="review-top">
-								<p>{{review.user.username}}</p>
-								{{macroStar.stars(review.star)}}
-							</div>
-							<p>{{review.text}}</p>
+						<p>{{review.text}}</p>
+					</div>
+					<!-- if user haven't post yet -->
+				{% elseif not userAlreadyPostReview %}
+					<div class="review-container">
+						<div class="review-top">
+							<p>{{review.user.username}}</p>
+							{{macroStar.stars(review.star)}}
 						</div>
-					{% endif %}
+						<p>{{review.text}}</p>
+					</div>
+				{% endif %}
 
 			{% endfor %}
 		</div>
