@@ -1,0 +1,67 @@
+/*Home page*/
+
+
+@media screen and (min-width: 590px){
+    .server-card{
+        .card-left{
+            width: 70%;
+        }
+        .card-right{
+            width: 30%;
+        }
+    }
+}
+
+
+@media screen and (min-width: 1200px){
+    .search-container{
+        position: relative;
+        transform: none;
+        &.active{
+            transform: none;
+        }
+        .toggle-search{
+            display: none;
+        }
+    }
+    .main-content{
+        gap: 1em;
+    }
+}
+
+/*Read One Server*/
+@media screen and (min-width:910px) {
+    .server-info{
+        >div:not(.star-container){
+            width: 60%;
+            margin:0 auto 1em;
+        }
+        .server-description{
+            width: 40%;
+            margin:2em auto;
+        }
+    }
+    .separator{
+        width: 50%;
+    }
+    #form-review{
+        width: 50%;
+    }
+    .review-container{
+        width: 70%;
+    }
+}
+
+/*Account*/
+
+@media screen and (min-width:910px){
+    #account{
+        h2{
+            margin: 1em 0 4em 0;
+        }
+        .account-info{
+            width: 40%;
+            transform: translateX(-2%);
+        }
+    }
+}

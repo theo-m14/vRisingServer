@@ -410,6 +410,7 @@ body{
         display: block;
         margin: 2em auto;
         width: 70%;
+        max-width: 290px;
         text-align: center;
         text-transform: uppercase;
         font-family: 'Alegreya';
@@ -445,6 +446,8 @@ body{
         text-transform: uppercase;
         font-family: 'Alegreya';
         text-align: center;
+        padding: 10px 15px;
+        max-width: 270px;
     }
     .card-right{
         gap: 1em;
@@ -454,7 +457,9 @@ body{
     form{
         width: 50%;
         margin: 2em auto;
+        display: flex;
         button{
+            max-width: 180px;
            width: 100%;
            margin: auto;
         }
