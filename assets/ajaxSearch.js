@@ -6,11 +6,16 @@ let getServerContainer = document.querySelector(".server-container");
 
 let getSearchError = document.querySelector(".search-error");
 
-let getMainContent = document.querySelector('.main-content');
+let getMainContent = document.querySelector(".main-content");
+
+let getToggleSearch = document.querySelector(".toggle-search");
+
+let getSearchContainer = document.querySelector(".search-container");
 
 getSearchBtn.addEventListener("click", (e) => {
   e.preventDefault();
   e.stopPropagation();
+  getSearchContainer.classList.remove("active");
   let formData = new FormData(searchForm);
 
   url = "/server-search?";
@@ -49,10 +54,14 @@ const paginationListener = () => {
         })
         .then(() => {
           paginationListener();
-          console.log('test')
-          getMainContent.scrollIntoView({behavior:"smooth"})
+          console.log("test");
+          getMainContent.scrollIntoView({ behavior: "smooth" });
         })
         .catch((e) => console.log(e));
     });
   });
 };
+
+getToggleSearch.addEventListener("click", () => {
+  getSearchContainer.classList.toggle("active");
+});
