@@ -460,4 +460,36 @@
     p>a{
         color: #AB2B1D;
     }
+    >a{
+        color: #AB2B1D;
+    }
+}
+
+/*Reset password*/
+
+.reset-pass-form, .reset-password{
+    h1{
+        text-align: center;
+        color: #AB2B1D;
+        text-decoration: underline;
+        margin: 1em 0;    
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;      
+        gap: 2em;
+        input{
+            padding: 5px;
+            border: 2px solid #AB2B1D;
+        }  
+    }
+}
+
+.reset-password-send{
+    text-align: center;
+    margin-top: 1em;
+    a{
+        color: $primaryColor;
+    }
 }
