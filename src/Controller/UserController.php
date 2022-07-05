@@ -30,11 +30,15 @@ class UserController extends AbstractController
 
         $averageNote = 0;
 
-        foreach($this->getUser()->getReviews() as $review){
-            $averageNote+=$review->getStar();
+        foreach ($this->getUser()->getReviews() as $review) {
+            $averageNote += $review->getStar();
         }
 
-        $averageNote = $averageNote / count($this->getUser()->getReviews());
+        if (empty($this->getUser()->getReviews)) {
+            $averageNote = 0;
+        } else {
+            $averageNote = $averageNote / count($this->getUser()->getReviews());
+        }
 
         return $this->render('user/profil.html.twig', ['averageNote' => $averageNote]);
     }
