@@ -4,25 +4,44 @@
 {% endblock %}
 
 {% block body %}
-	<h2>Mes Serveurs</h2>
-	<p>Nombre de Serveur :
-		{{servers|length}}
-		/ 2
-	</p>
-	{% for server in servers %}
+	<section class="user-server">
+		<h2>Mes Serveurs</h2>
 		<div>
-			{{server.name}}
-			{{server.type ? 'PVP' : 'PVE'}}
-			<p>{{server.description}}</p>
-			{% if server.userOwner == app.user %}
-				<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
-			{% endif %}
-			<a href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+		<p>Nombre de Serveur :</p>
+		<p>{{servers|length}} / 2</p>
 		</div>
-		<form action="{{path('app_server_delete', {'id' : server.id})}}" method='post' onsubmit='return (confirm("Voulez vous vraiment supprimer le serveur {{server.name}} ?"))'>
-			<input type="hidden" name="token" value="{{ csrf_token('delete-server') }}">
-			<button type="submit">Supprimer</button>
-		</form>
-	{% endfor %}
-	<a href="{{path('app_server_create')}}">Créer une fiche serveur</a>
+		{% for server in servers %}
+			<div class='server-card'>
+				<div class="card-left">
+					<h4>{{server.name}}</h4>
+					<p>{{server.description}}</p>
+				</div>
+				<div class="card-right">
+					{% if server.note %}
+						<div class="star-container">
+							{% for i in 1..5 %}
+								{% if i<=server.note|round %}
+									<div class='full-star'>.</div>
+								{% else %}
+									<div class='empty-star'>.</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% endif %}
+					<p class='review-info'>{{server.reviews|length}} AVIS</p>
+					<p class='{{server.type ? 'PVP' : 'PVE'}}'>{{server.type ? 'PVP' : 'PVE'}}</p>
+					{% if server.userOwner == app.user %}
+						<a href="{{path('app_server_edit', {'id' : server.id})}}" class='btn'>Editer</a>
+					{% endif %}
+						<a class='btn' href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
+				</div>
+			</div>
+			<form action="{{path('app_server_delete', {'id' : server.id})}}" method='post' onsubmit='return (confirm("Voulez vous vraiment supprimer le serveur {{server.name}} ?"))'>
+				<input type="hidden" name="token" value="{{ csrf_token('delete-server') }}">
+				<button type="submit">Supprimer</button>
+			</form>
+		{% endfor %}
+		<div class="separator"></div>
+		<a class='btn' href="{{path('app_server_create')}}">Créer une fiche serveur</a>
+	</section>
 {% endblock %}

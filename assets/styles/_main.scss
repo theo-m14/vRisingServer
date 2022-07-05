@@ -75,17 +75,6 @@
 .server-container{
     width: 70%;
     margin: auto;
-    // >div{
-    //     display: flex;
-    //     flex-direction: column;
-    //     align-items: center;
-    //     justify-content: center;
-        
-    //     margin-top: 1em;
-    //     background-color: rgb(240, 240, 240);
-    //     color: black;
-        
-    // }
     >div:first-child{
         margin-top: 0;
     }
@@ -179,6 +168,9 @@
     }
     .PVP{
         width: min-content;
+    }
+    .PVE{
+        border: white solid 2px;
     }
     &>div{
         width: 90%;
@@ -384,3 +376,45 @@
 }
 
 /*User Server*/
+
+.user-server{
+    width: 85%;
+    margin: auto;
+    h2{
+        text-align: center;
+        text-decoration: underline;
+        color: #DC3622;
+        margin: 1em 0 2em 0;
+    }
+    >div:first-of-type{
+        display: flex;
+        justify-content: space-between;
+        width: 60%;
+        margin: auto;
+        >p:first-of-type{
+            color: #AB2B1D;
+            margin-bottom: 2em;
+        }
+    }
+    .btn{
+        display: block;
+        margin: auto;
+        width: 50%;
+        text-transform: uppercase;
+        font-family: 'Alegreya';
+        text-align: center;
+    }
+    .card-right{
+        gap: 1em;
+        width:35%;
+        padding:1em;
+    }
+    form{
+        width: 50%;
+        margin: 2em auto;
+        button{
+           width: 100%;
+           margin: auto;
+        }
+    }
+}
