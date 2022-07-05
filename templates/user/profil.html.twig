@@ -19,14 +19,14 @@
 				<p>{{app.user.username}}</p>
 				<a href="{{path('app_user_editUsername')}}"><img src="/image/square-pen-solid.svg" alt="pen icon"></a>
 			</div>
-			<a href="" class='btn'>Changer mon mot de passe</a>
+			<a href="{{path('app_reset_password')}}" class='btn'>Changer mon mot de passe</a>
 			<div>
 			<p>Votre nombre d'avis : </p>
 			<p>{{app.user.reviews|length}}</p>
 			</div>
 			<div>
 			<p>Moyenne de vos notes :</p>
-			<p>{{averageNote}}/5</p>
+			<p>{{averageNote|round(2)}}/5</p>
 			</div>
 			<a class='btn' href="{{path('app_user_server')}}">Voir vos serveurs</a>
 		</div>

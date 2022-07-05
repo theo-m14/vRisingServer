@@ -11,7 +11,7 @@
 {% block body %}
 	{{form_start(form, {'attr' : {'id':'server-form'}})}}
 	{{form_widget(form.name, {'attr' : {'placeholder': 'Nom du serveur' }})}}
-	{{ form_errors(form.name) }}
+	{{form_errors(form.name) }}
 	<div>
 		{{form_label(form.clan_size, 'Taille de clan')}}
 		{{form_widget(form.clan_size)}}

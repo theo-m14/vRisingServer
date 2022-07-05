@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ServerController extends AbstractController
 {
@@ -40,6 +41,10 @@ class ServerController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        if(count($this->getUser()->getServers()) == 2){
+            $this->addFlash('error', "Le nombre de serveur est limité à deux par compte");
+            return $this->redirectToRoute('app_user_server');
+        }
 
         $newServer = new Server();
 
@@ -71,7 +76,8 @@ class ServerController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function edit(Server $server, ServerRepository $serverManager, Request $request)
     {
-        if ($server->getUserOwner() !== $this->getUser()) {
+        //dd(in_array('ROLE_ADMIN',$this->getUser()->getRoles()));
+        if ($server->getUserOwner() !== $this->getUser() && !in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
             $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
             return $this->redirectToRoute('app_server_readAll');
         }
@@ -92,7 +98,7 @@ class ServerController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Server $server, ServerRepository $serverManager, Request $request)
     {
-        if ($server->getUserOwner() !== $this->getUser()) {
+        if ($server->getUserOwner() !== $this->getUser()  && !in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
             $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
             return $this->redirectToRoute('app_server_readAll');
         }
@@ -101,6 +107,9 @@ class ServerController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete-server', $submittedToken)) {
             $serverManager->remove($server, true);
+            if(in_array('ROLE_ADMIN',$this->getUser()->getRoles())){
+                return $this->redirectToRoute('app_server_readAll');
+            }
             return $this->redirectToRoute('app_user_server');
         }
 

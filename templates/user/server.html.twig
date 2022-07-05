@@ -6,6 +6,9 @@
 {% block body %}
 	<section class="user-server">
 		<h2>Mes Serveurs</h2>
+		{% for error in app.session.flashbag.get('error') %}
+		<p class="error">{{ error }}</p>
+		{% endfor %}
 		<div>
 		<p>Nombre de Serveur :</p>
 		<p>{{servers|length}} / 2</p>

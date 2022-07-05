@@ -6,6 +6,8 @@ let getServerContainer = document.querySelector(".server-container");
 
 let getSearchError = document.querySelector(".search-error");
 
+let getMainContent = document.querySelector('.main-content');
+
 getSearchBtn.addEventListener("click", (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -47,7 +49,8 @@ const paginationListener = () => {
         })
         .then(() => {
           paginationListener();
-          window.scroll({ top: 0, behavior: "smooth" });
+          console.log('test')
+          getMainContent.scrollIntoView({behavior:"smooth"})
         })
         .catch((e) => console.log(e));
     });

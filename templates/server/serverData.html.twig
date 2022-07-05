@@ -22,12 +22,18 @@
 			<p class='review-info'>{{server.reviews|length}} AVIS</p>
 			<p class='{{server.type ? 'PVP' : 'PVE'}}'>
 				{{server.type ? 'PVP' : 'PVE'}}</p>
-			{% if server.userOwner == app.user %}
-				<a href="{{path('app_server_edit', {'id' : server.id})}}">Editer</a>
+			{% if server.userOwner == app.user or is_granted('ROLE_ADMIN')%}
+				<a href="{{path('app_server_edit', {'id' : server.id})}}" class='btn'>Editer</a>
 			{% endif %}
 			<a class='btn' href="{{path('app_server_readOne', {'id' : server.id})}}">Détails</a>
 		</div>
 	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<form class='deleteBtn' action="{{path('app_server_delete', {'id' : server.id})}}" method='post' onsubmit='return (confirm("Voulez vous vraiment supprimer le serveur {{server.name}} ?"))'>
+			<input type="hidden" name="token" value="{{ csrf_token('delete-server') }}">
+			<button type="submit">Supprimer</button>
+		</form>
+	{% endif %}
 {% endfor %}
 <div>
 	<nav>
