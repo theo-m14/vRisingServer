@@ -3,56 +3,56 @@
 {% block title %}Accueil
 {% endblock %}
 
+{% block javascripts %}
+	{{ encore_entry_script_tags('app') }}
+	{{ encore_entry_script_tags('starNote') }}
+{% endblock %}
+
 {% block body %}
+	{% import "macroStar.html.twig" as macroStar %}
 	{% for error in app.session.flashbag.get('error') %}
 		<p class="error">{{ error }}</p>
 	{% endfor %}
 	<div class="server-info">
 		<h3>{{server.name}}</h3>
 		{% if server.note %}
-				<div class="star-container">
-					{% for i in 1..5 %}
-						{% if i<=server.note|round %}
-							<div class='full-star'>.</div>
-						{% else %}
-							<div class='empty-star'>.</div>
-						{% endif %}
-					{% endfor %}
-				</div>
+				{{macroStar.stars(server.note)}}
 		{% endif %}
 		<div>
-			<p>Type de serveur :</p>
-			<p>{{server.type ? 'PVP' : 'PVE'}}</p>
+			<p class='label-info'>Type de serveur :</p>
+			<p class='{{server.type ? 'PVP' : 'PVE'}}'>{{server.type ? 'PVP' : 'PVE'}}</p>
 		</div>
 		<div>
-			<p>Date de lancement :</p>
+			<p class='label-info'>Date de lancement :</p>
 			<p>{{server.openDay|date('d/m/Y h:m')}}</p>
 		</div>
 		<div>
-			<p>Taille de clan :</p>
+			<p class='label-info'>Taille de clan :</p>
 			<p>{{server.clanSize}}</p>
 		</div>
 		<div>
-			<p>Serveur à reset :</p>
+			<p class='label-info'>Serveur à reset :</p>
 			<p>{{server.wipe ? 'Oui' : 'Non'}}</p>
 		</div>
 		{% if server.wipe %}
 			<div>
-				<p>Date de reset :</p>
+				<p class='label-info'>Date de reset :</p>
 				<p>{{server.wipeDate|date('d/m/Y h:m')}}</p>
 			</div>
 		{% endif %}
-		<div>
+		<div class='server-description'>
 			<p>{{server.description}}</p>
 		</div>
 		{% if server.discord is defined %}
-			<div>
+			<div class='discord'>
 				<p>SERVEUR DISCORD</p>
-				<p>{{server.discord}}</p>
+				<a href="{{server.discord}}">{{server.discord}}</a>
 			</div>
 		{% endif %}
 	</div>
+	<div class='separator'></div>
 	<div class="reviews-container">
+		<h3>AVIS</h3>
 		{% if app.user %}
 
 			<!-- Check if user already post review -->
@@ -73,48 +73,59 @@
 				{% for success in app.session.flashbag.get('success') %}
 					<p class="success">{{ success }}</p>
 				{% endfor %}
-				<form action="{{path('app_review_create', {'id' : server.id})}}" method="post">
-					<select name="rating" id="">
+				<form id='form-review' action="{{path('app_review_create', {'id' : server.id})}}" method="post">
+					<select name="rating" id="review-note">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
 					</select>
+					{{macroStar.stars(0)}}
 					<textarea name="review-text" id="" cols="30" rows="10" placeholder='Votre commentaire'></textarea>
-					<input type="submit" value="Poster">
+					<button type="submit">Poster</button>
 				</form>
 				<!-- Else show user review -->
 			{% else %}
 				<div class="user-review">
 					<p>Votre note :
-						{{ userReviewPosted.star }}</p>
+						{{ macroStar.stars(userReviewPosted.star)  }}</p>
 					<p>{{ userReviewPosted.text }}</p>
 					<form method='post' action="{{path('app_review_delete', {'id' : server.id})}}">
 						<input type="hidden" name="token" value="{{ csrf_token('delete-review') }}">
-						<input type="submit" value="Supprimer">
+						<button type="submit">Supprimer</button>
 					</form>
 				</div>
 			{% endif %}
 		{% else %}
 			{% set userAlreadyPostReview = false %}
-			<p>Connectez-vous pour poster un avis</p>
-			<a href="{{path('app_login')}}">Connexion</a>
+			<div class="review-login">
+				<p>Connectez-vous pour poster un avis</p>
+				<a href="{{path('app_login')}}" class='btn'>Connexion</a>
+			</div>
 		{% endif %}
 		<div class="server-reviews">
 			{% for review in server.reviews %}
 
-				<!-- check is user already post in order not to duplicate review  -->
-				{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
-					<p>Note :
-						{{ review.star }}</p>
-					<p>{{review.text}}</p>
-					<!-- if user haven't post yet -->
-				{% elseif not userAlreadyPostReview %}
-					<p>Note :
-						{{ review.star }}</p>
-					<p>{{review.text}}</p>
-				{% endif %}
+					<!-- check is user already post in order not to duplicate review  -->
+					{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
+						<div class="review-container">
+							<div class="review-top">
+								<p>{{review.user.username}}</p>
+								{{macroStar.stars(review.star)}}
+							</div>
+							<p>{{review.text}}</p>
+						</div>
+						<!-- if user haven't post yet -->
+					{% elseif not userAlreadyPostReview %}
+						<div class="review-container">
+							<div class="review-top">
+								<p>{{review.user.username}}</p>
+								{{macroStar.stars(review.star)}}
+							</div>
+							<p>{{review.text}}</p>
+						</div>
+					{% endif %}
 
 			{% endfor %}
 		</div>

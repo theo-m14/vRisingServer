@@ -157,3 +157,140 @@
         background-color: $thirdColor;
     }
 }
+
+/*Server Read One*/
+
+.server-info{
+    h3{
+        text-align: center;
+        margin-bottom: 0.5em;
+        font-weight: 500;
+        color: #EB5F4E;
+    }
+    .star-container{
+        margin-top: 1em;
+        margin: auto;
+        width: min-content;
+        transform: scale(115%);
+        margin-bottom: 2em;
+        div:not(div:last-of-type){
+            margin-right: 5px;
+        }
+    }
+    .PVP{
+        width: min-content;
+    }
+    &>div{
+        width: 90%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1em;
+    }
+    .label-info{
+        color: #EB5F4E;
+        font-family: 'Alegreya';
+        text-transform: uppercase;
+    }
+    .server-description{
+        background-color: $thirdColor;
+        color: black;
+        padding: 1em;
+    }
+    .discord{
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+        a{
+            color: #EB5F4E;
+            text-decoration: underline;
+        }
+    }
+}
+
+.separator{
+    width: 90%;
+    margin: auto;
+    background-color: $thirdColor;
+    height: 10px;
+    margin-bottom: 1em;
+}
+
+.reviews-container{
+    width: 90%;
+    margin: auto;
+    h3{
+        text-align: center;
+        margin-bottom: 1em;
+        font-weight: 500;
+        color: #EB5F4E;
+        text-decoration: underline;
+    }
+    button{
+        margin-bottom: 1em;
+    }
+    .review-login{
+        p{
+            text-align: center;
+        }
+        .btn{
+            display: block;
+            width: 20%;
+            text-align: center;
+            margin: 1em auto;
+        }
+    }
+    .user-review{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2em;
+        button{
+            transform: scale(70%);
+        }
+    }
+    .review-container{
+        width: 90%;
+        margin: auto;
+        background-color: $thirdColor;
+        margin-bottom: 1em;
+        color: black;
+        padding:15px 10px;
+        border-radius: 5px;
+        .review-top{
+            display: flex;
+            width: 90%;
+            margin: auto;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .star-container{
+            background-color: white;
+            padding: 5px;
+            border-radius: 10px;
+        }
+    }
+    #form-review{
+        select{
+           display: none;
+        }
+        textarea{
+            padding: 5px;
+        }
+        button{
+            width: 25%;
+            margin: auto;
+            text-align: center;
+            margin-top: 1em;
+        }
+        margin: 1em auto;
+        display: flex;
+        flex-direction: column;
+        .star-container{
+            margin: auto;
+            margin-bottom: 1em;
+            transform: scale(115%);
+            gap: 5px;
+        }
+    }
+}

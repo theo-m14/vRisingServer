@@ -1,0 +1,11 @@
+{% macro stars(note) %}
+    <div class="star-container">
+					{% for i in 1..5 %}
+						{% if i<=note|round %}
+							<div class='full-star' star-number='{{ i }}'>.</div>
+						{% else %}
+							<div class='empty-star' star-number='{{ i }}'>.</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+{% endmacro %}
