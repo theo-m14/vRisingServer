@@ -6,13 +6,16 @@ use App\Entity\Review;
 use App\Entity\Server;
 use App\Repository\ReviewRepository;
 use App\Repository\ServerRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use function PHPUnit\Framework\isEmpty;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
-use function PHPUnit\Framework\isEmpty;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ReviewController extends AbstractController
 {
@@ -118,5 +121,33 @@ class ReviewController extends AbstractController
 
         $this->addFlash('error', "Demande non valide");
         return $this->redirectToRoute('app_server_readOne', ['id' => $server->getId()]);
+    }
+
+    #[Route('serveur/{id}/avis', name: 'app_review_readAll')]
+    public function readAll(Request $request, ReviewRepository $reviewManager, Server $server, PaginatorInterface $paginator)
+    {
+        $reviewsData = $reviewManager->findBy(['server' => $server]);
+
+        if ($this->getUser()) {
+
+            $userReview = $reviewManager->userReviewOnThisServer($this->getUser(), $server);
+
+
+            if (isEmpty($userReview)) {
+                foreach ($reviewsData as $key => $review) {
+                    if ($review == $userReview[0]) {
+                        unset($reviewsData[$key]);
+                    }
+                }
+            }
+        }
+
+        $reviews = $paginator->paginate(
+            $reviewsData,
+            $request->query->getInt('page', 1),
+            4
+        );
+
+        return new JsonResponse(['content' => $this->renderView('review/reviewData.twig', ['reviews' => $reviews])]);
     }
 }

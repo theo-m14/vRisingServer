@@ -7,6 +7,7 @@
 	{{ encore_entry_script_tags('app') }}
 	{{ encore_entry_script_tags('starNote') }}
 	{{ encore_entry_script_tags('burger') }}
+	{{encore_entry_script_tags('reviews')}}
 {% endblock %}
 
 {% block body %}
@@ -105,7 +106,7 @@
 				<a href="{{path('app_login')}}" class='btn'>Connexion</a>
 			</div>
 		{% endif %}
-		<div class="server-reviews">
+		<div class="server-reviews" server-id="{{server.id}}">
 			{% for review in server.reviews %}
 
 				<!-- check is user already post in order not to duplicate review  -->

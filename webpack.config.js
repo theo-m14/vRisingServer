@@ -26,6 +26,7 @@ Encore
   .addEntry("checkInfoAvailablity", "./assets/checkInfoAvailablity.js")
   .addEntry("starNote", "./assets/starNote.js")
   .addEntry("burger", "./assets/burger.js")
+  .addEntry("reviews", "./assets/reviews.js")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge("./assets/controllers.json")

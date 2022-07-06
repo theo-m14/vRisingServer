@@ -181,6 +181,7 @@ body{
         h4{
             margin-bottom: 2em;
             color: #AB2B1D;
+            font-size: 22px;
         }
         p{
             color: black;
@@ -487,6 +488,7 @@ body{
         display: block;
         margin: auto;
         width: 50%;
+        min-width: 100px;
         text-transform: uppercase;
         font-family: 'Alegreya';
         text-align: center;
@@ -497,6 +499,8 @@ body{
         gap: 1em;
         width:35%;
         padding:1em;
+        align-items: center;
+        justify-content: center;
     }
     form{
         width: 50%;

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Server;
 use App\Form\ServerType;
+use App\Repository\ReviewRepository;
 use App\Repository\ServerRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -15,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Length;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ServerController extends AbstractController
 {
@@ -41,7 +44,7 @@ class ServerController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if(count($this->getUser()->getServers()) == 2){
+        if (count($this->getUser()->getServers()) == 2) {
             $this->addFlash('error', "Le nombre de serveur est limité à deux par compte");
             return $this->redirectToRoute('app_user_server');
         }
@@ -65,8 +68,18 @@ class ServerController extends AbstractController
     }
 
     #[Route('/serveur/{id}', name: 'app_server_readOne')]
-    public function readOne(Server $server): Response
+    public function readOne(Server $server, ReviewRepository $reviewManager): Response
     {
+        // if ($this->getUser()) {
+
+        //     $userReview = $reviewManager->userReviewOnThisServer($this->getUser(), $server);
+
+
+        //     if (isEmpty($userReview)) {
+        //         $userAlreadyPost = true;
+        //     }
+        // }
+
         return $this->render('server/readOne.html.twig', [
             'server' => $server,
         ]);
@@ -77,7 +90,7 @@ class ServerController extends AbstractController
     public function edit(Server $server, ServerRepository $serverManager, Request $request)
     {
         //dd(in_array('ROLE_ADMIN',$this->getUser()->getRoles()));
-        if ($server->getUserOwner() !== $this->getUser() && !in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
+        if ($server->getUserOwner() !== $this->getUser() && !in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
             return $this->redirectToRoute('app_server_readAll');
         }
@@ -98,7 +111,7 @@ class ServerController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Server $server, ServerRepository $serverManager, Request $request)
     {
-        if ($server->getUserOwner() !== $this->getUser()  && !in_array('ROLE_ADMIN',$this->getUser()->getRoles())) {
+        if ($server->getUserOwner() !== $this->getUser()  && !in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             $this->addFlash('error', 'Vous devez être propriétaire du serveur pour le modifier');
             return $this->redirectToRoute('app_server_readAll');
         }
@@ -107,7 +120,7 @@ class ServerController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete-server', $submittedToken)) {
             $serverManager->remove($server, true);
-            if(in_array('ROLE_ADMIN',$this->getUser()->getRoles())){
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
                 return $this->redirectToRoute('app_server_readAll');
             }
             return $this->redirectToRoute('app_user_server');
@@ -154,13 +167,13 @@ class ServerController extends AbstractController
 
         $numberOfReview = $request->query->get('review');
 
-        if($numberOfReview !== 'all' and $numberOfReview !== 'asc' and $numberOfReview !== 'desc'){
+        if ($numberOfReview !== 'all' and $numberOfReview !== 'asc' and $numberOfReview !== 'desc') {
             return new JsonResponse([], $status = 400);
         }
 
         $note = $request->query->get('note');
 
-        if($note !== 'all' and $note !== 'asc' and $note !== 'desc'){
+        if ($note !== 'all' and $note !== 'asc' and $note !== 'desc') {
             return new JsonResponse([], $status = 400);
         }
 
