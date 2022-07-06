@@ -1,5 +1,23 @@
-/*Home page*/
+/*Navbar*/
 
+@media screen and (min-width: 1200px){
+     #navbar{
+        #burger{
+            display: none;
+        }
+        ul{
+            transform: translateX(0);
+            position: relative;
+            flex-direction: row;
+            background-color: transparent;
+            border: none;
+            margin-right: 1em;
+            top: 0;
+        }
+     }
+}
+
+/*Home page*/
 
 @media screen and (min-width: 590px){
     .server-card{

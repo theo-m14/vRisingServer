@@ -1,6 +1,9 @@
 <nav id='navbar'>
 	<a href="/"><img src="/image/VrisingserverLogo.png" alt=""></a>
-	<ul>
+	<div id='burger'>
+		<span></span>
+	</div>
+	<ul class='menu'>
 		<li>
 			<a href="/">Accueil</a>
 		</li>
@@ -10,6 +13,10 @@
 			</li>
 			<li>
 				<a href="{{path('app_user_server')}}">Mes Serveurs</a>
+			</li>
+		{% else %}
+			<li>
+				<a href="{{path('app_login')}}">Connexion</a>
 			</li>
 		{% endif %}
 		<li>

@@ -24,7 +24,8 @@ Encore
   .addEntry("ajaxSearch", "./assets/ajaxSearch.js")
   .addEntry("createServer", "./assets/createServer.js")
   .addEntry("checkInfoAvailablity", "./assets/checkInfoAvailablity.js")
-  .addEntry('starNote', "./assets/starNote.js")
+  .addEntry("starNote", "./assets/starNote.js")
+  .addEntry("burger", "./assets/burger.js")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge("./assets/controllers.json")
