@@ -2,7 +2,7 @@
 
 <p>Pour réinitialiser votre mot de passe veuillez cliquer sur le lien suivant</p>
 
-<a href="http://vrising-server.theo-michel.fr/{{path('app_reset_password', {token: resetToken.token}) }}">http://vrising-server.theo-michel.fr{{path('app_reset_password', {token: resetToken.token}) }}</a>
+<a href="https://vrising-server.theo-michel.fr/{{path('app_reset_password', {token: resetToken.token}) }}">https://vrising-server.theo-michel.fr{{path('app_reset_password', {token: resetToken.token}) }}</a>
 
 <p>Ce lien expire dans
 	{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>

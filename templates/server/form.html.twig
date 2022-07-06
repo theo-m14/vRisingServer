@@ -22,7 +22,7 @@
 		{{form_widget(form.type)}}
 		{{form_errors(form.type) }}
 	</div>
-	<div>
+	<div class='date-field'>
 		{{form_label(form.openDay, 'Date de lancement')}}
 		{{form_widget(form.openDay)}}
 		{{form_errors(form.openDay) }}
@@ -32,7 +32,7 @@
 		{{form_widget(form.wipe)}}
 		{{form_errors(form.wipe) }}
 	</div>
-	<div id='wipeDate'>
+	<div id='wipeDate' class='date-field'>
 		{{form_label(form.wipe_date, 'Date de reset', {'label_attr' : {'id' : 'wipeDate'}})}}
 		{{form_widget(form.wipe_date)}}
 		{{ form_errors(form.wipe_date) }}

@@ -40,10 +40,9 @@
 /*Main content*/ 
 .main-content{
     width: 85%;
-    margin: auto;
+    margin:2em auto;
     display: flex;
     align-items: flex-start;
-    margin-top: 2em;
 }
 
 /* Search Container */
@@ -63,6 +62,7 @@ body{
         color: white;
     }
     position: absolute;
+    z-index: 1;
     left : 0;
     border: 2px solid $primaryColor;
     width: 70%;
@@ -91,11 +91,6 @@ body{
     }
 }
 
-.error{
-    color: #DC3622;
-    text-align: center;
-}
-
 /*Server Container*/
 
 .server-container{
@@ -107,6 +102,9 @@ body{
 
 /*server card*/
 .server-card{
+    .btn{
+        text-align: center;
+    }
     display: flex;
     flex-direction: row;
     margin: auto;
@@ -131,7 +129,7 @@ body{
         display:flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
         gap: 1em;
         padding: 5px 0;
         .review-info{
@@ -152,21 +150,7 @@ body{
     }
 }
 
-/*server type*/
 
-.PVE{
-    background-color: $secondaryColor;
-    color: white;
-    border-radius: 10px;
-    padding:1px 7px;
-}
-
-.PVP{
-    background-color: #EB5F4E;
-    color: white;
-    border-radius: 10px;
-    padding:1px 7px;
-}
 
 .star-container{
     display: flex;
@@ -240,13 +224,7 @@ body{
     }
 }
 
-.separator{
-    width: 90%;
-    margin: auto;
-    background-color: $thirdColor;
-    height: 10px;
-    margin-bottom: 1em;
-}
+
 
 /*Review part*/
 .reviews-container{
@@ -284,9 +262,9 @@ body{
     }
     .review-container{
         width: 90%;
-        margin: auto;
+        max-width: 640px;
+        margin:2em auto;
         background-color: $thirdColor;
-        margin-bottom: 1em;
         color: black;
         padding:15px 10px;
         border-radius: 5px;
@@ -331,6 +309,7 @@ body{
 /*serveur form*/
 
 #server-form{
+    max-width: 710px;
     div.displayNone{
         display: none;
     }
@@ -345,7 +324,7 @@ body{
         padding: 5px;
     }
     #server_name{
-        width: 35%;
+        width: 55%;
         margin: auto;
         font-family: 'Alegreya';
     }
@@ -373,6 +352,7 @@ body{
     button{
         width: 60%;
         margin: auto;
+        max-width: 220px;
     }
 }
 
@@ -469,7 +449,9 @@ body{
 /*Login Form*/
 
 #loginForm{
+    max-width: 510px;
     h2{
+        text-align: center;
         text-transform: uppercase;
         text-decoration: underline;
         font-family: 'Alegreya';
@@ -492,6 +474,9 @@ body{
     >a{
         color: #AB2B1D;
     }
+    a:hover{
+        text-decoration: underline;
+    }
 }
 
 /*Reset password*/
@@ -508,6 +493,9 @@ body{
         flex-direction: column;
         align-items: center;      
         gap: 2em;
+        label{
+            margin-right: 10px;
+        }
         input{
             padding: 5px;
             border: 2px solid #AB2B1D;

@@ -12,6 +12,16 @@
     }
 }
 
+@media screen and (min-width: 1200px){
+    .header-banner{
+        padding: 8em 6em;
+        p{
+            width: 50%;
+            margin: auto;
+        }
+    }
+}
+
 
 @media screen and (min-width: 1200px){
     .search-container{
@@ -62,6 +72,18 @@
         .account-info{
             width: 40%;
             transform: translateX(-2%);
+        }
+    }
+}
+
+/*Serveur Form*/
+
+@media screen and (max-width:710px){
+    #server-form{
+        .date-field{
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
         }
     }
 }
