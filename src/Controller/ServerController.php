@@ -70,18 +70,22 @@ class ServerController extends AbstractController
     #[Route('/serveur/{id}', name: 'app_server_readOne')]
     public function readOne(Server $server, ReviewRepository $reviewManager): Response
     {
-        // if ($this->getUser()) {
+        $userAlreadyPost = false;
+        $userReview = null;
 
-        //     $userReview = $reviewManager->userReviewOnThisServer($this->getUser(), $server);
+        if ($this->getUser()) {
 
+            $userReview = $reviewManager->userReviewOnThisServer($this->getUser(), $server);
 
-        //     if (isEmpty($userReview)) {
-        //         $userAlreadyPost = true;
-        //     }
-        // }
+            if (!empty($userReview)) {
+                $userAlreadyPost = true;
+                $userReview = $userReview[0];
+            }
+        }
 
         return $this->render('server/readOne.html.twig', [
-            'server' => $server,
+            'server' => $server, 'userAlreadyPost' => $userAlreadyPost,
+            'userReview' => $userReview
         ]);
     }
 

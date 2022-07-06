@@ -133,7 +133,7 @@ class ReviewController extends AbstractController
             $userReview = $reviewManager->userReviewOnThisServer($this->getUser(), $server);
 
 
-            if (isEmpty($userReview)) {
+            if (!empty($userReview)) {
                 foreach ($reviewsData as $key => $review) {
                     if ($review == $userReview[0]) {
                         unset($reviewsData[$key]);

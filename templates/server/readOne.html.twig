@@ -56,18 +56,8 @@
 	<div class="reviews-container">
 		<h3>AVIS</h3>
 		{% if app.user %}
-
-			<!-- Check if user already post review -->
-			{% set userAlreadyPostReview = false %}
-			{% set userReviewPosted = {} %}
-			{% for userReview in app.user.reviews %}
-				{% if userReview.server == server %}
-					{% set userAlreadyPostReview  = true %}
-					{% set userReviewPosted = userReview %}
-				{% endif %}
-			{% endfor %}
-			<!-- If not, show form -->
-			{% if not userAlreadyPostReview and server not in app.user.servers %}
+			{# if user don't review this server #}
+			{% if not userAlreadyPost%}
 				{% for error in app.session.flashbag.get('error') %}
 					<p class="error">
 						{{ error }}</p>
@@ -88,11 +78,11 @@
 					<button type="submit">Poster</button>
 				</form>
 				<!-- Else show user review -->
-			{% elseif userAlreadyPostReview %}
+			{% else %}
 				<div class="user-review">
 					<p>Votre note :
-						{{ macroStar.stars(userReviewPosted.star)  }}</p>
-					<p>{{ userReviewPosted.text }}</p>
+						{{ macroStar.stars(userReview.star)  }}</p>
+					<p>{{ userReview.text }}</p>
 					<form method='post' action="{{path('app_review_delete', {'id' : server.id})}}">
 						<input type="hidden" name="token" value="{{ csrf_token('delete-review') }}">
 						<button type="submit">Supprimer</button>
@@ -106,30 +96,6 @@
 				<a href="{{path('app_login')}}" class='btn'>Connexion</a>
 			</div>
 		{% endif %}
-		<div class="server-reviews" server-id="{{server.id}}">
-			{% for review in server.reviews %}
-
-				<!-- check is user already post in order not to duplicate review  -->
-				{% if userAlreadyPostReview and userReviewPosted.id != review.id %}
-					<div class="review-container">
-						<div class="review-top">
-							<p>{{review.user.username}}</p>
-							{{macroStar.stars(review.star)}}
-						</div>
-						<p>{{review.text}}</p>
-					</div>
-					<!-- if user haven't post yet -->
-				{% elseif not userAlreadyPostReview %}
-					<div class="review-container">
-						<div class="review-top">
-							<p>{{review.user.username}}</p>
-							{{macroStar.stars(review.star)}}
-						</div>
-						<p>{{review.text}}</p>
-					</div>
-				{% endif %}
-
-			{% endfor %}
-		</div>
+		<div class="server-reviews" server-id="{{server.id}}"></div>
 	</div>
 {% endblock %}
