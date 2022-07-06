@@ -9,17 +9,20 @@
 {% endblock %}
 
 {% block body %}
-	{% for error in app.session.flashbag.get('error') %}
-		<p class="error">{{ error }}</p>
-	{% endfor %}
-	{{form_start(form)}}
-	{% if form.username is defined %}
-		{{form_widget(form.username)}}
-	{% endif %}
-	{% if form.email is defined %}
-		{{form_widget(form.email)}}
-	{% endif %}
-	<button type="submit" id='submitBtn' disabled>Changer</button>
-	{{form_end(form)}}
-	<p id='infoAvailablity'></p>
+	<section class="changeInfo">
+		{% for error in app.session.flashbag.get('error') %}
+			<p class="error">{{ error }}</p>
+		{% endfor %}
+		<h2>Changement d'information</h2>
+		{{form_start(form)}}
+		{% if form.username is defined %}
+			{{form_widget(form.username)}}
+		{% endif %}
+		{% if form.email is defined %}
+			{{form_widget(form.email)}}
+		{% endif %}
+		<button type="submit" id='submitBtn' disabled>Changer</button>
+		{{form_end(form)}}
+		<p id='infoAvailablity'></p>
+	</section>
 {% endblock %}
