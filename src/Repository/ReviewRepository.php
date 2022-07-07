@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Review;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-
+use App\Entity\Server;
 use function PHPUnit\Framework\isEmpty;
+
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Review>
@@ -50,6 +51,20 @@ class ReviewRepository extends ServiceEntityRepository
             ->setParameter('server', $server);
         $result = $request->getQuery()->getResult();
         return $result;
+    }
+
+    public function orderByNoteOrDate(Server $server, string $date = '', string $note = '')
+    {
+        $request = $this->createQueryBuilder('r')
+            ->andWhere('r.server = :server')
+            ->setParameter('server', $server);
+        if ($note == 'asc' or $note == 'desc') {
+            $request->orderBy('r.star', $note);
+        } else if ($date == 'asc' or $date == 'desc') {
+            $request->orderBy('r.postedAt', $date);
+        }
+
+        return $request->getQuery()->getResult();
     }
 
     //    /**

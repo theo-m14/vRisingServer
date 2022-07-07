@@ -133,7 +133,21 @@ class ReviewController extends AbstractController
     #[Route('serveur/{id}/avis', name: 'app_review_readAll')]
     public function readAll(Request $request, ReviewRepository $reviewManager, Server $server, PaginatorInterface $paginator)
     {
-        $reviewsData = $reviewManager->findBy(['server' => $server]);
+        if ($request->query->get('note')) {
+            $note = $request->query->get('note');
+            if ($note === 'asc' or $note === 'desc') {
+                $reviewsData = $reviewManager->orderByNoteOrDate($server, '', $note);
+            }
+        } else if ($request->query->get('date')) {
+            $date = $request->query->get('date');
+            if ($date === 'asc' or $date === 'desc') {
+                $reviewsData = $reviewManager->orderByNoteOrDate($server, $date);
+            }
+        } else {
+            $reviewsData = $reviewManager->findBy(['server' => $server]);
+        }
+
+
 
         if ($this->getUser()) {
 

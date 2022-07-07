@@ -96,6 +96,14 @@
 				<a href="{{path('app_login')}}" class='btn'>Connexion</a>
 			</div>
 		{% endif %}
+		<div class="review-filter">
+			<div class="date-filter active">
+				<p>+ Récents</p>
+			</div>
+			<div class="note-filter">
+				<p>&#8593; Note</p>
+			</div>
+		</div>
 		<div class="server-reviews" server-id="{{server.id}}"></div>
 	</div>
 {% endblock %}
