@@ -105,3 +105,32 @@
         }
     }
 }
+
+/*3 First Server*/
+@media screen and (min-width:935px) {
+    .server-container{
+        width: 70%;
+        .best-servers{
+            display: flex;
+            width: 30%;
+            text-align: center;
+            .server-card{
+                flex-direction: column;
+                justify-content: space-between;
+                padding-bottom: 1em;
+                .card-right{
+                    width: 100%;
+                }
+                .card-left{
+                    width: 90%;
+                    margin: auto;
+                    padding: 0;
+                    p{
+                        padding: 0;
+                    }
+                }
+            } 
+        }
+
+    }
+}

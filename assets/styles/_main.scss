@@ -115,6 +115,7 @@ body{
 }
 
 .search-container{
+    margin-top: 4em;
     .toggle-search{
         position: absolute;
         right: 0;
@@ -159,14 +160,55 @@ body{
 /*Server Container*/
 
 .server-container{
+    h3{
+        width: 100%;
+        margin:1em auto;
+        text-align: center;
+        font-size: 26px;
+        color: $primaryColor;
+        text-decoration: underline;
+    }
     margin:1em auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     >div:first-child{
         margin-top: 0;
+    }
+    .best-servers{ 
+        .server-card{
+            background-color: #2B0804;
+            position: relative;       
+            padding-bottom: 5px;
+            &::after{
+                position: absolute;
+                content: '';
+                height: 3px;
+                width: 100%;
+                bottom: 0;
+                background-color: #DC3622;
+                box-shadow: #DC3622 0px 2px 5px, #DC3622 0px -2px 5px;
+            }
+            .card-right{
+                background-color: #2B0804;
+                .review-info{
+                    color: white;
+                }
+            }
+            .card-left{
+                background-color: #2B0804;
+                p{
+                    background-color: $thirdColor;      
+                    padding: 1em;
+                }
+            }
+        }
     }
 }
 
 /*server card*/
 .server-card{
+    width: 100%;
     .btn{
         text-align: center;
     }

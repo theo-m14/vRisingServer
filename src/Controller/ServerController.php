@@ -189,6 +189,6 @@ class ServerController extends AbstractController
             8,
         );
 
-        return new JsonResponse(['content' => $this->renderView('server/serverData.html.twig', ['servers' => $serverPaginate])]);
+        return new JsonResponse(['content' => $this->renderView('server/serverData.html.twig', ['servers' => $serverPaginate, 'search' => true])]);
     }
 }
