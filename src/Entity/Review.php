@@ -27,6 +27,9 @@ class Review
     #[ORM\Column(type: 'text', nullable: true)]
     private $text;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $postedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Review
     public function setText(?string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getPostedAt(): ?\DateTimeImmutable
+    {
+        return $this->postedAt;
+    }
+
+    public function setPostedAt(\DateTimeImmutable $postedAt): self
+    {
+        $this->postedAt = $postedAt;
 
         return $this;
     }

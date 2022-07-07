@@ -124,14 +124,8 @@ button{
             color: #DC3622;
         }
         border-radius: 50%;
-        &:hover{
-            background-color: #DC3622;
-            a{
-                color: white;
-            }
-        }
     }
-    span.next,span.last{
+    span.next,span.last,span.first,span.previous{
         color: #DC3622;
         transform: scale(150%);
         font-weight: bold;

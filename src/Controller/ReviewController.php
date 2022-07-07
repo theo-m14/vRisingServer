@@ -6,6 +6,9 @@ use App\Entity\Review;
 use App\Entity\Server;
 use App\Repository\ReviewRepository;
 use App\Repository\ServerRepository;
+use DateTime;
+use DateTimeImmutable;
+
 use function PHPUnit\Framework\isEmpty;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +46,11 @@ class ReviewController extends AbstractController
         }
 
         $review = new Review();
-        $review->setStar($request->request->get('rating'))->setText($request->request->get('review-text'))->setServer($server)->setUser($this->getUser());
+        $review->setStar($request->request->get('rating'))
+            ->setText($request->request->get('review-text'))
+            ->setServer($server)
+            ->setUser($this->getUser())
+            ->setPostedAt(DateTimeImmutable::createFromMutable(new DateTime()));
 
         $reviewManager->add($review, true);
 

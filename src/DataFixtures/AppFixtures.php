@@ -37,7 +37,6 @@ class AppFixtures extends Fixture
                 ->setClanSize($faker->numberBetween($min = 0, $max = 4))
                 ->setDiscord($faker->url)
                 ->setUserOwner($user);
-
             $manager->persist($server);
         }
 
