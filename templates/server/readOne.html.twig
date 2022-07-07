@@ -65,7 +65,20 @@
 				{% for success in app.session.flashbag.get('success') %}
 					<p class="success">{{ success }}</p>
 				{% endfor %}
-				{% if app.user is not same as server.userOwner %}{% endif %}
+				{% if app.user is not same as server.userOwner %}
+					<form id='form-review' action="{{path('app_review_create', {'id' : server.id})}}" method="post">
+						<select name="rating" id="review-note">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+						{{macroStar.stars(0)}}
+						<textarea name="review-text" id="" cols="30" rows="10" placeholder='Votre commentaire'></textarea>
+						<button type="submit">Poster</button>
+					</form>
+				{% endif %}
 				<!-- Else show user review -->
 			{% else %}
 				<div class="user-review">
