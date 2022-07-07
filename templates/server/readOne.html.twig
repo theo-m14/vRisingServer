@@ -62,9 +62,6 @@
 					<p class="error">
 						{{ error }}</p>
 				{% endfor %}
-				{% for success in app.session.flashbag.get('success') %}
-					<p class="success">{{ success }}</p>
-				{% endfor %}
 				{% if app.user is not same as server.userOwner %}
 					<form id='form-review' action="{{path('app_review_create', {'id' : server.id})}}" method="post">
 						<select name="rating" id="review-note">
@@ -81,6 +78,9 @@
 				{% endif %}
 				<!-- Else show user review -->
 			{% else %}
+				{% for success in app.session.flashbag.get('success') %}
+					<p class="success">{{ success }}</p>
+				{% endfor %}
 				<div class="user-review">
 					<p>Votre note :
 						{{ macroStar.stars(userReview.star)  }}</p>

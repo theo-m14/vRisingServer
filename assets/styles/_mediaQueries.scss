@@ -94,6 +94,44 @@
     }
 }
 
+@media screen and (max-width:470px) {
+    #account{
+        .account-info div{
+            flex-direction: column;
+            gap: 1em;
+        }
+    }
+}
+
+/*user server*/
+
+@media screen and (max-width:431px)
+{
+    .user-server{
+        >div:first-of-type{
+            flex-direction: column;
+            text-align: center;
+            padding-bottom: 1em;
+        }
+        .server-card{
+            flex-direction: column;
+            .card-right{
+                width: 100%;
+                padding: 0;
+                padding-bottom: 1em;
+            }
+            .card-left{
+                width: 100%;
+                text-align: center;
+                padding: 0;
+                p{
+                    padding: 5px;
+                }
+            }
+        }
+    }
+}
+
 /*Serveur Form*/
 
 @media screen and (max-width:710px){
