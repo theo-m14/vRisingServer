@@ -1,18 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
-        {{ form_start(registrationForm, {'attr' : {'id' : 'loginForm'}}) }}
-        <h2>Inscription</h2>
-        {{form_errors(registrationForm.plainPassword)}}
-        {{form_errors(registrationForm.email)}}
-        {{form_errors(registrationForm.username)}}
-        {{form_widget(registrationForm.email, {'attr' : {'placeholder' : 'Email'}})}}
-        {{ form_widget(registrationForm.username, {'attr' : {'placeholder' : 'Username'}}) }}
-        {{ form_widget(registrationForm.plainPassword, {'attr' : {'placeholder' : 'Mot de passe'}}) }}
+	{{ form_start(registrationForm, {'attr' : {'id' : 'loginForm'}}) }}
+	<h2>Inscription</h2>
+	{{form_errors(registrationForm.plainPassword.children['first'])}}
+	{{form_errors(registrationForm.plainPassword.children['second'])}}
+	{{form_errors(registrationForm.email)}}
+	{{form_errors(registrationForm.username)}}
+	{{form_widget(registrationForm.email, {'attr' : {'placeholder' : 'Email'}})}}
+	{{form_widget(registrationForm.username, {'attr' : {'placeholder' : 'Username'}}) }}
+	{{form_widget(registrationForm.plainPassword.children['first'])}}
+	{{form_widget(registrationForm.plainPassword.children['second'])}}
 
-        <button type="submit" class="btn">Inscription</button>
-        <p>Déjà inscrit ? <a href="{{path('app_login')}}">Connexion</a></p>
-    {{ form_end(registrationForm) }}
+	<button type="submit" class="btn">Inscription</button>
+	<p>Déjà inscrit ?
+		<a href="{{path('app_login')}}">Connexion</a>
+	</p>
+	{{ form_end(registrationForm) }}
 {% endblock %}

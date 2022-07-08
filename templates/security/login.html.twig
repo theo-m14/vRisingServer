@@ -5,6 +5,9 @@
 
 
 {% block body %}
+	{% for error in app.session.flashbag.get('error') %}
+		<p class="error">{{ error }}</p>
+	{% endfor %}
 	<form method="post" id='loginForm'>
 		<h2>Bienvenue sur VRisingServer</h2>
 		{% if error %}

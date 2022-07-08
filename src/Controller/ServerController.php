@@ -41,6 +41,7 @@ class ServerController extends AbstractController
     public function create(Request $request, ServerRepository $serverManager): Response
     {
         if (!$this->getUser()) {
+            $this->addFlash('error', 'Vous devez vous connecter pour créer un serveur');
             return $this->redirectToRoute('app_login');
         }
 
