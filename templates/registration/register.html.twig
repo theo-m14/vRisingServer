@@ -6,6 +6,9 @@
 {% block body %}
 	{{ form_start(registrationForm, {'attr' : {'id' : 'loginForm'}}) }}
 	<h2>Inscription</h2>
+	{% for error in app.session.flashbag.get('error') %}
+		<p class="error">{{ error }}</p>
+	{% endfor %}
 	{{form_errors(registrationForm.plainPassword.children['first'])}}
 	{{form_errors(registrationForm.plainPassword.children['second'])}}
 	{{form_errors(registrationForm.email)}}

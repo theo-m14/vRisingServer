@@ -5,13 +5,13 @@
 	{% if server[0] is defined %}
 		{% set server = server[0] %}
 	{% endif %}
-	{% if loop.index <= 3 %}
+	{% if loop.index <= 3 and not is_granted('ROLE_ADMIN') %}
 		<div class="best-servers">
 		{% endif %}
 		<div class='server-card'>
 			<div class="card-left">
 				<h4>{{server.name}}</h4>
-				<p>{{server.description|slice(0,100)}}
+				<p>{{server.description|slice(0,150)}}
 					...</p>
 			</div>
 			<div class="card-right">
@@ -53,7 +53,7 @@
 				<button type="submit">Supprimer</button>
 			</form>
 		{% endif %}
-		{% if loop.index <= 3 %}
+		{% if loop.index <= 3 and not is_granted('ROLE_ADMIN')%}
 		</div>
 	{% endif %}
 {% endfor %}

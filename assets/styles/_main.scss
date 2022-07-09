@@ -180,6 +180,9 @@ body{
     >div:first-child{
         margin-top: 0;
     }
+    .deleteBtn{
+        min-width: 160px;
+    }
     .best-servers{
         width: 100%;
         .server-card{
