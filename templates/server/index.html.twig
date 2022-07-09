@@ -88,7 +88,13 @@
 			</form>
 		</div>
 		<div class='server-container'>
-			<h3>Notre Sélection</h3>
+			<p>test :
+				{{app.request.get('page') == ''}}</p>
+			{% if app.request.get('page') is defined and app.request.get('page') == '1'%}
+				<h3>Notre Sélection</h3>
+			{% elseif app.request.get('page') is not defined %}
+				<h3>Notre Sélection</h3>
+			{% endif %}
 			{% include "server/serverData.html.twig" %}
 		</div>
 	</div>
