@@ -27,12 +27,12 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($userManager->checkIfEmailExist($user->getEmail())) {
+            if (!$userManager->checkIfEmailExist($user->getEmail())) {
                 $this->addFlash('error', 'Cette Email est déjà pris');
                 return $this->redirectToRoute('app_register');
             }
 
-            if ($userManager->checkIfUsernameExist($user->getUsername())) {
+            if (!$userManager->checkIfUsernameExist($user->getUsername())) {
                 $this->addFlash('error', 'Ce pseudo est déjà pris');
                 return $this->redirectToRoute('app_register');
             }

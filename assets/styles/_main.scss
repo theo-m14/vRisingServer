@@ -176,7 +176,7 @@ body{
     margin:1em auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     >div:first-child{
         margin-top: 0;
     }
